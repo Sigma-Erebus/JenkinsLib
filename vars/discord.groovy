@@ -1,6 +1,6 @@
 def sendMessage(message, webhook)
 {
-   bat(script: "curl -X POST --data '{"content": "${message}"' --header "Content-Type:application/json" "${webhook}"")
+   bat(script: "curl -X POST --data '{\"content\": \"${message}\"' --header \"Content-Type:application/json\" \"${webhook}\"")
 }
 
 def succeeded(webhook)
