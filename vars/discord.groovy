@@ -3,7 +3,7 @@ def sendMessage(message, webhook)
    bat(script: """
       curl -X POST ^
       -H "Content-Type: application/json" ^
-      -d "{\"username\": \"test\", \"${message}\": \"hello\"}" ^
+      -d "{\"username\": \"test\", \"content\": \"${message}\"}" ^
       ${webhook}
    """)
 }
