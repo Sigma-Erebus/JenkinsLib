@@ -2,12 +2,11 @@ import groovy.json.JsonOutput
 
 def createMessage(title, status, fields, url, content = null){
 
+   // Color must be decimal
    def color = 16711680
 
-   if ( status == "ok"){
+   if (status){
       color = 65280
-   }else if(status == "new"){
-       color = "359360"
    }
 
    def body = [embeds: 
@@ -20,7 +19,8 @@ def createMessage(title, status, fields, url, content = null){
     if (url != null){
         body.embeds[0].url = url
     }
-    if(content !=null){
+	
+    if(content != null){
         body.content = content
     }
 	
@@ -37,12 +37,12 @@ def sendMessage(message, webhook)
    """)
 }
 
-def succeeded(webhook)
+def succeeded(config, platform, webhook)
 {
-   sendMessage(createMessage(":white_check_mark: Build #${env.BUILD_NUMBER} - Last Perforce Revision: ${env.P4_CHANGELIST} Passed Building",
-                                     "ok",
-									 [[name:"Last Perforce Revision", value:"${env.P4_CHANGELIST}", inline:true]]
-									 ,"https://jbs1.buas.nl:8443/job/Y2020-Y3/job/Y2020-Y3-Arid/job/Arid-TestEnv/","**Status: Success**\nBuild URL: ${env.BUILD_URL}")
+   sendMessage(createMessage(":white_check_mark: BUILD #${env.BUILD_NUMBER} - SUCCESS :white_check_mark:",
+                                     true,
+									 [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
+									 ,"${env.BUILD_URL}")
                                  , webhook)
 }
 
