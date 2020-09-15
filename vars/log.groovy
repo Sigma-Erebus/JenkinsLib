@@ -1,4 +1,4 @@
-def this(message)
+def print(message)
 {
    echo "${message}"
 }
