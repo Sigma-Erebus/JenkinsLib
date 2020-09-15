@@ -2,13 +2,6 @@ import groovy.json.JsonOutput
 
 def createMessage(title, status, fields, url, content = null){
 
-   // Color must be decimal
-   def color = 16711680
-
-   if (status){
-      color = 65280
-   }
-
    def body = [embeds: 
    [[
     title: title,
@@ -16,15 +9,22 @@ def createMessage(title, status, fields, url, content = null){
     fields: fields
     ]]]
 	
-    if (url != null){
-        body.embeds[0].url = url
-    }
+   // Color must be decimal
+   def color = 16711680
+
+   if (status){
+      color = 65280
+   }
 	
-    if(content != null){
-        body.content = content
-    }
+   if (url){
+       body.embeds[0].url = url
+   }
 	
-    return JsonOutput.toJson(body).replace('"','""')
+   if (content){
+       body.content = content
+   }
+	
+   return JsonOutput.toJson(body).replace('"','""')
 }
 
 def sendMessage(message, webhook)
