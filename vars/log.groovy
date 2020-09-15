@@ -1,19 +1,19 @@
 def this(message)
 {
-	echo "${message}"
+   echo "${message}"
 }
 
 def warning(message)
 {
-	echo "Warning: ${message}"
+   echo "Warning: ${message}"
 }
 
 def error(message)
 {
-	echo "Error: ${message}"
+   echo "Error: ${message}"
 }
 
 def currStage()
 {
-	echo "${STAGE_NAME}"
+   echo "${STAGE_NAME}"
 }
