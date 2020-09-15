@@ -1,4 +1,4 @@
-def build(MSBuildPath, project, config, platform)
+def build(MSBuildPath, projectPath, config, platform)
 {
-   bat(script: "CALL '${MSBuildPath}' '${project}' /t:build /p:Configuration=${config};Platform=${platform};verbosity=diagnostic")
+   bat(script: 'CALL "${MSBuildPath}" "${projectPath}" /t:build /p:Configuration=${config};Platform=${platform};verbosity=diagnostic')
 }
