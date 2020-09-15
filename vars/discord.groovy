@@ -2,19 +2,19 @@ import groovy.json.JsonOutput
 
 def createMessage(title, status, fields, url, content = null){
 
-   def body = [embeds: 
-   [[
-    title: title,
-    color: color,
-    fields: fields
-    ]]]
-	
    // Color must be decimal
    def color = 16711680
 
    if (status){
       color = 65280
    }
+
+   def body = [embeds: 
+   [[
+    title: title,
+    color: color,
+    fields: fields
+    ]]]
 	
    if (url){
        body.embeds[0].url = url
