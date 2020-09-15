@@ -39,18 +39,18 @@ def sendMessage(message, webhook)
 
 def succeeded(config, platform, webhook)
 {
-   sendMessage(createMessage(":x: BUILD #${env.BUILD_NUMBER} - FAILED :x:",
-                                     false,
-									 [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
-									 ,"${env.BUILD_URL}")
+   sendMessage(createMessage(":white_check_mark: BUILD #${env.BUILD_NUMBER} - SUCCESS :white_check_mark:",
+                                     true,
+                                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
+                                     ,"${env.BUILD_URL}")
                                  , webhook)
 }
 
 def failed(config, platform, webhook)
 {
-   sendMessage(createMessage(":white_check_mark: BUILD #${env.BUILD_NUMBER} - SUCCESS :white_check_mark:",
-                                     true,
-									 [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
-									 ,"${env.BUILD_URL}")
+   sendMessage(createMessage(":x: BUILD #${env.BUILD_NUMBER} - FAILED :x:",
+                                     false,
+                                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
+                                     ,"${env.BUILD_URL}")
                                  , webhook)
 }
