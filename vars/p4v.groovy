@@ -1,4 +1,4 @@
-def sync(credential, workspace, forceCleanws = true)
+def sync(credential, workspace, forceCleanws=true)
 {
    if (forceCleanws)
    {
