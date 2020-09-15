@@ -1,4 +1,4 @@
-def print(message)
+def log(message)
 {
    echo "${message}"
 }
