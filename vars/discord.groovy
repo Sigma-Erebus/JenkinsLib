@@ -4,7 +4,7 @@ def sendMessage(webhook)
       curl -X POST ^
       -H "Content-Type: application/json" ^
       -d "{\"username\": \"test\", \"content\": \"hello\"}" ^
-      ${webhook}
+      webhook
    """)
 }
 
