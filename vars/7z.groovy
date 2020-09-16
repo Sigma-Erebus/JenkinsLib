@@ -1,4 +1,4 @@
 def pack(source, archiveName)
 {
-   bat(script: "7z a \"${source}.zip\" \"${source}\\*\"")
+   bat(script: "7z a \"${archiveName}.zip\" \"${source}\\*\"")
 }
