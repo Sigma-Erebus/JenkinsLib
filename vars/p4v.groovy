@@ -16,6 +16,12 @@ def createTicket(credential, p4host)
    return ticket
 }
 
+def upVote(review,user,ticket,swarm_url){
+    swarm.init(user,ticket,swarm_url)
+    swarm.upVote(review)
+    swarm.clear()
+}
+
 def withSwarm(credentials, p4Port, client, mapping, Closure body){
         withSwarmUrl(env.P4USER,env.P4WORKSPACE,env.P4MAPPING)
         { 
