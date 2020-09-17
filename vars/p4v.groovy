@@ -7,7 +7,8 @@ def createTicket(credential, p4host)
 {
    def ticket = ""
    withCredentials([usernamePassword(credentialsId: credential, passwordVariable: 'P4PASS', usernameVariable: 'P4USER')]) {
-      bat(script: 'FOR /F "tokens=*" %%F IN ("echo %P4PASS%| p4 -p ${p4host} -u %P4USER% login -ap") do SET ${ticket}=%%F')
+      def result = bat(script: 'FOR /F "tokens=*" %%F IN ("echo %P4PASS%| p4 -p ${p4host} -u %P4USER% login -ap") do SET ${ticket}=%%F', returnStdout: true)
+	  ticket = result.tokenize().last()
    }
    
    return ticket
