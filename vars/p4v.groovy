@@ -15,3 +15,12 @@ def createTicket(credential, p4host)
    
    return ticket
 }
+
+def withSwarm(credentials, p4Port, client, mapping, Closure body){
+        withSwarmUrl(env.P4USER,env.P4CLIENT,env.P4MAPPING)
+        { 
+            url,user->
+            def p4Ticket = ticket(credentials,p4Port)
+            body(user,p4Ticket,url)
+        }
+}
