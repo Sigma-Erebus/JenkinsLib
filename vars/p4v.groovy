@@ -28,7 +28,7 @@ def withSwarm(credentials, p4Port, client, mapping, Closure body){
 def withSwarmUrl(credentials,client,mapping,Closure body){
         withCredentials([usernamePassword(credentialsId: credentials, passwordVariable: 'p4USERPASS', usernameVariable: 'p4USER' )]) {
             def url = swarmUrl(credentials,client,mapping)
-            body(url,%p4USER%,%p4USERPASS%)
+            body(url,env.p4USER,env.p4USERPASS)
         }
 }
 
