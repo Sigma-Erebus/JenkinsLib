@@ -7,6 +7,10 @@ def init(user, ticket, url){
     swarmInfo.url = url
 }
 
+def clear() {
+    swarmInfo.clear()
+}
+
 def upVote(id) {
    bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST \"${swarmInfo.url}/reviews/${id}/vote/up\"")
 }
