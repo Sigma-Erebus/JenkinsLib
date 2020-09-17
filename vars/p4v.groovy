@@ -7,7 +7,7 @@ def createTicket(credential, p4host)
 {
    def ticket = ""
    withCredentials([usernamePassword(credentialsId: 'credential', passwordVariable: 'P4PASS', usernameVariable: 'P4USER')]) {
-      bat(script: 'FOR /F "tokens=*" %%F IN ('"echo %P4PASS%| p4 -p ssl:swarm2.buas.nl:1667 -u %P4USER% login -ap"') do SET ${ticket}=%%F')
+      bat(script: 'FOR /F "tokens=*" %%F IN ("'echo %P4PASS%| p4 -p ssl:swarm2.buas.nl:1667 -u %P4USER% login -ap'") do SET ${ticket}=%%F')
    }
    
    return ticket
