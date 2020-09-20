@@ -1,16 +1,19 @@
 def swarmInfo = null
 
-def init(user, ticket, url){
+def init(user, ticket, url)
+{
     swarmInfo = [user:null, ticket:null, url:null]
     swarmInfo.user = user
     swarmInfo.ticket = ticket
     swarmInfo.url = url
 }
 
-def clear() {
+def clear() 
+{
     swarmInfo.clear()
 }
 
-def upVote(id) {
+def upVote(id) 
+{
    bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST \"${swarmInfo.url}/reviews/${id}/vote/up\"")
 }

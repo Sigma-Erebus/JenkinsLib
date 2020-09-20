@@ -1,26 +1,30 @@
 import groovy.json.JsonOutput
 
-def createMessage(title, status, fields, url, content = null){
+def createMessage(title, buildPassed, fields, url, content = null)
+{
+   // Color must be decimal value
+   def color = 16711680 // Default = red
 
-   // Color must be decimal
-   def color = 16711680
-
-   if (status){
-      color = 65280
+   if (buildPassed) 
+   {
+      color = 65280 // Green
    }
 
    def body = [embeds: 
-   [[
+    [[
     title: title,
     color: color,
     fields: fields
-    ]]]
+    ]]
+   ]
 	
-   if (url){
+   if (url) 
+   {
        body.embeds[0].url = url
    }
 	
-   if (content){
+   if (content) 
+   {
        body.content = content
    }
 	
@@ -42,7 +46,7 @@ def succeeded(config, platform, webhook)
    sendMessage(createMessage(":white_check_mark: BUILD #${env.BUILD_NUMBER} - SUCCESS :white_check_mark:",
                                      true,
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
-                                     ,"${env.BUILD_URL}")
+                                     , "${env.BUILD_URL}")
                                  , webhook)
 }
 
@@ -51,6 +55,6 @@ def failed(config, platform, webhook)
    sendMessage(createMessage(":x: BUILD #${env.BUILD_NUMBER} - FAILED :x:",
                                      false,
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
-                                     ,"${env.BUILD_URL}")
+                                     , "${env.BUILD_URL}")
                                  , webhook)
 }
