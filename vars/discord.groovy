@@ -38,8 +38,8 @@ def succeeded(config, platform, webhook)
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
                                      [name:"Job url:", 
-                                     value:"${env.BUILD_URL}"]]
-                                 , webhook))
+                                     value:"${env.BUILD_URL}"]])
+                                 , webhook)
 }
 
 def failed(config, platform, webhook)
@@ -48,6 +48,6 @@ def failed(config, platform, webhook)
                                      false,
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}", 
-                                     inline:true]]
-                                 , webhook))
+                                     inline:true]])
+                                 , webhook)
 }
