@@ -1,6 +1,6 @@
 import groovy.json.JsonOutput
 
-def createMessage(title, buildPassed, fields)
+def createMessage(title, buildPassed, fields, footer)
 {
    // Color must be decimal value
    def color = 16711680 // Default = red
@@ -14,7 +14,8 @@ def createMessage(title, buildPassed, fields)
       [[
       title: title,
       color: color,
-      fields: fields
+      fields: fields,
+      footer: footer
       ]]
    ]
 	
@@ -37,8 +38,9 @@ def succeeded(config, platform, webhook)
                                      true,
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
-                                     [name:"Job url:", 
-                                     value:"${env.BUILD_URL}"]])
+                                     [name:"Job url", 
+                                     value:"${env.BUILD_URL}"]],
+                                     "${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})")
                                  , webhook)
 }
 
@@ -47,7 +49,9 @@ def failed(config, platform, webhook)
    sendMessage(createMessage(":x: BUILD #${env.BUILD_NUMBER} - FAILED :x:",
                                      false,
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", 
-                                     value:"Last Changelist: ${env.P4_CHANGELIST}", 
-                                     inline:true]])
+                                     value:"Last Changelist: ${env.P4_CHANGELIST}"],
+                                     [name:"Job url", 
+                                     value:"${env.BUILD_URL}"]],
+                                     "${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})")
                                  , webhook)
 }
