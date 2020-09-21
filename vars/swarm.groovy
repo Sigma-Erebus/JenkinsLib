@@ -26,16 +26,35 @@ def downVote(id)
 
 def comment(id, comment)
 {
-   bat(script: """
-      curl -u \"${swarm_object.user}:${swarm_object.ticket}\" -X POST 
-      -H \"Content-Type: application/x-www-form-urlencoded\" 
-      -d \"topic=reviews/${id}&body=${comment}\" \"${swarmInfo.url}/api/v9/comments\"
-   """)
+   bat(script: "curl -u \"${swarm_object.user}:${swarm_object.ticket}\" -X POST -H \"Content-Type: application/x-www-form-urlencoded\" -d \"topic=reviews/${id}&body=${comment}\" \"${swarmInfo.url}/api/v9/comments/\"")
 }
 
-def vote(id, vote, version = null)
+def needsReview(id)
 {
-   def body = JsonOutput.toJson([vote: vote, version: version])
+    setState(id,"needsReview")
+}
 
-   bat(script: "curl -X POST -H \"Content-Type: application/json\" -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -d \"${body}\" \"${swarmInfo.url}/api/v10/reviews/${id}/vote\"")
+def needsRevision(id)
+{
+    setState(id,"needsRevision")
+}
+
+def approve(id)
+{
+    setState(id,"approved")
+}
+
+def archive(id)
+{
+    setState(id,"archived")
+}
+
+def reject(id)
+{
+    setState(id,"rejected")
+}
+
+def setState(id, state)
+{
+    script: "curl -u \"${swarm_object.user}:${swarm_object.ticket}\" -X PATCH  -H \"Content-Type: application/x-www-form-urlencoded\" -d \"state=${state}\" \"${swarmInfo.url}/api/v9/reviews/${id}/state/\""
 }
