@@ -34,7 +34,7 @@ def sendMessage(message, webhook)
 
 def succeeded(config, platform, webhook)
 {
-   sendMessage(createMessage(":white_check_mark: BUILD #${env.BUILD_NUMBER} - SUCCESS :white_check_mark:",
+   sendMessage(createMessage(":white_check_mark: BUILD SUCCEEDED :white_check_mark:",
                                      true,
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
@@ -46,7 +46,7 @@ def succeeded(config, platform, webhook)
 
 def failed(config, platform, webhook)
 {
-   sendMessage(createMessage(":x: BUILD #${env.BUILD_NUMBER} - FAILED :x:",
+   sendMessage(createMessage(":x: BUILD FAILED :x:",
                                      false,
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
