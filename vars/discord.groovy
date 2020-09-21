@@ -35,10 +35,10 @@ def succeeded(config, platform, webhook)
 {
    sendMessage(createMessage(":white_check_mark: BUILD #${env.BUILD_NUMBER} - SUCCESS :white_check_mark:",
                                      true,
-                                     [{name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
-                                     value:"Last Changelist: ${env.P4_CHANGELIST}"},
-                                     {name:"Job url:", 
-                                     value:"${env.BUILD_URL}"}]
+                                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
+                                     value:"Last Changelist: ${env.P4_CHANGELIST}"],
+                                     [name:"Job url:", 
+                                     value:"${env.BUILD_URL}"]]
                                  , webhook))
 }
 
