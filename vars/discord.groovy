@@ -1,6 +1,6 @@
 import groovy.json.JsonOutput
 
-def createMessage(title, buildPassed, fields, url, content = null)
+def createMessage(title, buildPassed, fields)
 {
    // Color must be decimal value
    def color = 16711680 // Default = red
@@ -11,22 +11,12 @@ def createMessage(title, buildPassed, fields, url, content = null)
    }
 
    def body = [embeds: 
-    [[
-    title: title,
-    color: color,
-    fields: fields
-    ]]
+      [[
+      title: title,
+      color: color,
+      fields: fields
+      ]]
    ]
-	
-   if (url) 
-   {
-       body.embeds[0].url = url
-   }
-	
-   if (content) 
-   {
-       body.content = content
-   }
 	
    return JsonOutput.toJson(body).replace('"','""')
 }
@@ -45,16 +35,19 @@ def succeeded(config, platform, webhook)
 {
    sendMessage(createMessage(":white_check_mark: BUILD #${env.BUILD_NUMBER} - SUCCESS :white_check_mark:",
                                      true,
-                                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
-                                     , "${env.BUILD_URL}")
-                                 , webhook)
+                                     [{name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
+                                     value:"Last Changelist: ${env.P4_CHANGELIST}"},
+                                     {name:"Job url:", 
+                                     value:"${env.BUILD_URL}"}]
+                                 , webhook))
 }
 
 def failed(config, platform, webhook)
 {
    sendMessage(createMessage(":x: BUILD #${env.BUILD_NUMBER} - FAILED :x:",
                                      false,
-                                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", value:"Last Changelist: ${env.P4_CHANGELIST}", inline:true]]
-                                     , "${env.BUILD_URL}")
-                                 , webhook)
+                                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", 
+                                     value:"Last Changelist: ${env.P4_CHANGELIST}", 
+                                     inline:true]]
+                                 , webhook))
 }
