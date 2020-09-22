@@ -15,7 +15,6 @@ def createMessage(title, buildPassed, fields, footer = null)
       title: title,
       color: color,
       fields: fields
-      //footer: footer
       ]]
    ]
 	
@@ -44,8 +43,8 @@ def succeeded(config, platform, webhook)
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
                                      [name:"Job url", 
-                                     value:"${env.BUILD_URL}"]],
-                                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
+                                     value:"${env.BUILD_URL}"]])
+                                     //[text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
                                  , webhook)
 }
 
