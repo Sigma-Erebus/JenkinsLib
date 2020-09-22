@@ -1,6 +1,6 @@
 import groovy.json.JsonOutput
 
-def createMessage(title, buildPassed, fields, footer)
+def createMessage(title, buildPassed, fields, footer = null)
 {
    // Color must be decimal value
    def color = 16711680 // Default = red
@@ -14,11 +14,16 @@ def createMessage(title, buildPassed, fields, footer)
       [[
       title: title,
       color: color,
-      fields: fields,
-      footer: footer
+      fields: fields
+      //footer: footer
       ]]
    ]
 	
+   if (footer)
+   {
+      body.footer = footer
+   }
+
    return JsonOutput.toJson(body).replace('"','""')
 }
 
