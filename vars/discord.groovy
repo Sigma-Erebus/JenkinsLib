@@ -21,7 +21,7 @@ def createMessage(title, buildPassed, fields, footer = null)
 	
    if (footer)
    {
-      body.footer = footer
+      body.embeds.footer = footer
    }
 
    return JsonOutput.toJson(body).replace('"','""')
