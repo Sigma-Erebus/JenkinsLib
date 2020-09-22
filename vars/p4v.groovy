@@ -31,7 +31,7 @@ def getCurrChangelistDescr(credential, name, viewMapping)
             desc = item.get(key)
          }
       }
-	}
+   }
 
 	return desc
 }
