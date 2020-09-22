@@ -15,7 +15,6 @@ def createMessage(title, buildPassed, fields, footer = null)
       title: title,
       color: color,
       fields: fields
-      //footer: footer
       ]]
    ]
 	
@@ -24,7 +23,8 @@ def createMessage(title, buildPassed, fields, footer = null)
       body.embeds[0].footer = footer
    }
 
-   return JsonOutput.toJson(body).replace('"','""')
+   //return JsonOutput.toJson(body).replace('"','""')
+   return JsonOutput.toJson(body)
 }
 
 def sendMessage(message, webhook)
