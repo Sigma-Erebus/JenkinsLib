@@ -112,7 +112,9 @@ def newReview(swarmUrl, webhook, description = null)
    sendMessage(createMessage(":warning: NEW REVIEW :warning:",
                                      "yellow",
                                      [[name:"A new review is ready", 
-                                     value:"${swarmUrl}/reviews/${env.P4_REVIEW}"]],
+                                     value:"${swarmUrl}/reviews/${env.P4_REVIEW}"],
+                                     [name:"Participants", 
+                                     value:"${description}"]],
                                      [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"],
                                      "${description}")
                                  , webhook)
