@@ -1,13 +1,24 @@
 import groovy.json.JsonOutput
 
-def createMessage(title, buildPassed, fields, footer = null)
+def createMessage(title, messageColor, fields, footer = null, content = null)
 {
    // Color must be decimal value
-   def color = 16711680 // Default = red
+   def color = 0 // Transparant
 
-   if (buildPassed) 
-   {
-      color = 65280 // Green
+   switch (messageColor) 
+   {            
+         case "green":
+            color = 65280 // Green
+            break
+         case "yellow":
+            color = 16776960 // Yellow
+            break
+         case "red":
+            color = 16711680 // Red
+            break
+         default: 
+            color = 0 // Transparant
+            break
    }
 
    def body = [embeds: 
@@ -23,6 +34,11 @@ def createMessage(title, buildPassed, fields, footer = null)
       body.embeds[0].footer = footer
    }
 
+   if (content)
+   {
+      body.content = content
+   }
+
    return JsonOutput.toJson(body).replace('"','""')
 }
 
@@ -34,7 +50,7 @@ def sendMessage(message, webhook)
 def succeeded(config, platform, webhook)
 {
    sendMessage(createMessage(":white_check_mark: BUILD SUCCEEDED :white_check_mark:",
-                                     true,
+                                     "green",
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
                                      [name:"Job url", 
@@ -46,11 +62,22 @@ def succeeded(config, platform, webhook)
 def failed(config, platform, webhook)
 {
    sendMessage(createMessage(":x: BUILD FAILED :x:",
-                                     false,
+                                     "red",
                                      [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
                                      [name:"Job url", 
                                      value:"${env.BUILD_URL}"]],
                                      [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
+                                 , webhook)
+}
+
+def newReview(webhook)
+{
+   sendMessage(createMessage(":warning: NEW REVIEW :warning:",
+                                     "yellow",
+                                     [[name:"A new review is ready", 
+                                     value:"${swarm.swarmInfo.swarmUrl}/reviews/${env.P4_REVIEW}"]],
+                                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"],
+                                     "@everyone")
                                  , webhook)
 }
