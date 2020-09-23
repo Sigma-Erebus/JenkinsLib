@@ -16,10 +16,10 @@ def createTicket(credential, p4host)
    return ticket
 }
 
-def getCurrChangelistDescr(credential, name, viewMapping)
+def getChangelistDescr(id, credential, name, viewMapping)
 {
    def p4 = p4(credential: credential, workspace: manualSpec(charset: 'none', cleanup: false, name: name, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: viewMapping)))
-   def changeList = p4.run('describe', '-s', '-S', "${env.P4_CHANGELIST}")
+   def changeList = p4.run('describe', '-s', '-S', "${id}")
    def desc = ""
 
    for (def item : changeList) 
@@ -34,4 +34,9 @@ def getCurrChangelistDescr(credential, name, viewMapping)
    }
 
    return desc
+}
+
+def getCurrChangelistDescr(credential, name, viewMapping)
+{
+   return getChangelistDescr(env.P4_CHANGELIST, credential, name, viewMapping)
 }
