@@ -1,11 +1,12 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-import groovy.json.JsonBuilder
 
 def createGroup(users, groupName, groups)
 {
-   def jsonBuilder = new JsonBuilder()
-   jsonBuilder group: ["users": "${users}"]
+   def group = [
+      name: groupName,
+      users: users
+   ]
 
    def groupJSON = JsonOutput.toJson(group)
    groups.add(groupJSON)
@@ -14,12 +15,11 @@ def createGroup(users, groupName, groups)
 def getGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
-   def data = []
-   groups.each {
-      data.add(jsonSlurper.parseText(jsonText))
-   }
+   def data = jsonSlurper.parseText(groups)
 
-   return data[0]
+   data[groupName].each { key, value ->
+      echo "${key}: ${value}"
+   }
 }
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
