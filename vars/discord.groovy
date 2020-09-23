@@ -3,20 +3,16 @@ import groovy.json.JsonSlurper
 
 def createGroup(users, groupName, groups)
 {
-   def groupJSON = JsonOutput.toJson([groupName: groupName, users: users])
+   def groupJSON = JsonOutput.toJson([name: groupName, users: users])
    groups.add(groupJSON)
 }
 
 def getGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
-   def data = null
-
-   groups.each {
-      data = data + jsonSlurper.parseText(it)
-   }
+   def data = jsonSlurper.parseText(groups[0])
    
-   return data[groupName]
+   return data
 }
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
