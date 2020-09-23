@@ -1,9 +1,7 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-def groups = []
-
-def createGroup(users, groupName)
+def createGroup(users, groupName, groups)
 {
    def group = [
       groupName: users
@@ -13,7 +11,7 @@ def createGroup(users, groupName)
    groups.add(groupJSON)
 }
 
-def getGroup(groupName)
+def getGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
    data = jsonSlurper.parse(groups)
