@@ -15,13 +15,17 @@ def createGroup(users, groupName, groups)
 def getGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
-   
-   def groupsParsed = ""
+
+   def users = ""
    groups.each {
-      groupsParsed = jsonSlurper.parseText(it)
+      def groupsParsed = jsonSlurper.parseText(it)
+      if (groupsParsed.get(name) == groupName)
+      {
+         users = groupsParsed.get(users)
+      }
    }
 
-   return groupsParsed.get(groupName)
+   return users
 }
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
