@@ -1,13 +1,11 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import groovy.json.JsonBuilder
 
 def createGroup(users, groupName, groups)
 {
-   def group = [
-      name: groupName [
-         users: users
-      ]
-   ]
+   def jsonBuilder = new JsonBuilder()
+   jsonBuilder group: ["users": "${users}"]
 
    def groupJSON = JsonOutput.toJson(group)
    groups.add(groupJSON)
