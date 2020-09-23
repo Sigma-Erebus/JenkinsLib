@@ -1,10 +1,9 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-def groupsFile = new File("groups.json")
 
-def getGroupFile()
+def createGroupFile()
 {
-   return groupsFile
+   return new File("groups.json")
 }
 
 def createGroup(users, groupName, file)
