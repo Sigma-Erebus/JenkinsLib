@@ -15,7 +15,7 @@ def createGroup(users, groupName, groups)
 def getGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
-   def data = jsonSlurper.parseText(groups)
+   def data = jsonSlurper.parseText(groups[0])
 
    data[groupName].each { key, value ->
       echo "${key}: ${value}"
