@@ -14,7 +14,7 @@ def createGroup(users, groupName, groups)
 def getGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
-   data = jsonSlurper.parse(groups)
+   data = jsonSlurper.parseText(groups)
    
    return data[groupName]
 }
