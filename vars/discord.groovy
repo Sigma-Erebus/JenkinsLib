@@ -34,7 +34,7 @@ def mentionGroup(groupName, groups)
 
    def message = users.join(",")
    users.each {
-      message = message.replace("${it}", "'<@!${it}>'")
+      message = message.replace("${it}", "<@${it}>")
    }
    message = message.replace(",", " ")
 
@@ -120,6 +120,7 @@ def newReview(swarmUrl, webhook, description = null)
                                      value:"${swarmUrl}/reviews/${env.P4_REVIEW}"],
                                      [name:"Participants", 
                                      value:"${description}"]],
-                                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
+                                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"],
+                                     "${description}")
                                  , webhook)
 }
