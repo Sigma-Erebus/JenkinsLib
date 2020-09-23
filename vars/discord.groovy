@@ -27,7 +27,7 @@ def getGroup(groupName, groups)
    
    def message = users
    users.each {
-      message = message.replaceAll("${it}", "@${it}")
+      message = message.replaceAll("*.", "@${it}")
    }
 
    return message
