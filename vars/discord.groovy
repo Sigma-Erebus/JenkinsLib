@@ -19,9 +19,9 @@ def getGroup(groupName, groups)
    def users = ""
    groups.each {
       def groupsParsed = jsonSlurper.parseText(it)
-      if (groupsParsed.get(name) == groupName)
+      if (groupsParsed.get("name") == groupName)
       {
-         users = groupsParsed.get(users)
+         users = groupsParsed.get("users")
       }
    }
 
