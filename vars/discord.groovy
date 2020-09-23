@@ -19,6 +19,7 @@ def getGroup(groupName, groups)
    def groupsParsed = ""
    groups.each {
       groupsParsed = jsonSlurper.parseText(it)
+      echo groupsParsed
    }
 
    def value = groupsParsed.data.find {
