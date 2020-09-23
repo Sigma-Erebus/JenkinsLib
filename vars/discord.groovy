@@ -25,12 +25,14 @@ def getGroup(groupName, groups)
       }
    }
    
-   def message = users.join(",")
-   //users.each {
-   //   message = message.replace("${it}", "@${it}")
-   //}
+   //def message = users.join(",")
+   
+   users.each {
+      //message = message.replace("${it}", "@${it}")
+      it = "@${it}"
+   }
 
-   return message
+   return users
 }
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
