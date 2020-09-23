@@ -1,13 +1,9 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+def groupsFile = new File("groups.json")
 
 def getGroupFile()
 {
-   if (!groupsFile.exists())
-   {
-      def groupsFile = new File("groups.json")
-   }
-
    return groupsFile
 }
 
