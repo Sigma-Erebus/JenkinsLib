@@ -30,7 +30,7 @@ def getGroup(groupName, groups)
       message = message.replace("${it}", "@${it}")
    }
 
-   return users
+   return message
 }
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
