@@ -1,33 +1,22 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-def createGroupFile()
-{
-   return new File("groups.json")
-}
+def groups = []
 
-def createGroup(users, groupName, file)
+def createGroup(users, groupName)
 {
    def group = [
       groupName: users
    ]
 
    def groupJSON = JsonOutput.toJson(group)
-
-   if (file.exists())
-   {
-      file.write(groupJSON)
-   }
-   else
-   {
-      echo "File doesn't exist!"
-   }
+   groups.add(groupJSON)
 }
 
-def getGroup(groupName, file)
+def getGroup(groupName)
 {
    def jsonSlurper = new JsonSlurper()
-   data = jsonSlurper.parse(file)
+   data = jsonSlurper.parse(groups)
    
    return data[groupName]
 }
