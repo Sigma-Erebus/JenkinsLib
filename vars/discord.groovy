@@ -24,8 +24,13 @@ def getGroup(groupName, groups)
          users = groupsParsed.get("users")
       }
    }
+   
+   def message = ""
+   users.each {
+      message = message.replace(it,"<@${it}>")
+   }
 
-   return users
+   return message
 }
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
