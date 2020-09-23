@@ -37,6 +37,8 @@ def mentionGroup(groupName, groups)
       message = message.replace("${it}", "<@${it}>")
    }
    message = message.replace(",", " ")
+
+   return message
 }
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
