@@ -9,8 +9,10 @@ def createGroup(users, groupName, groups)
 
 def getGroup(groupName, groups)
 {
+   def jsonText = [{"groupName":"TestGroup","users":["Synciant#8017","Synciant#8017","Synciant#8017"]}]
+
    def jsonSlurper = new JsonSlurper()
-   def data = jsonSlurper.parseText(groups[0])
+   def data = jsonSlurper.parseText(jsonText)
    
    return data
 }
