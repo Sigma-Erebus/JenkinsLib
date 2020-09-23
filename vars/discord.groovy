@@ -28,12 +28,7 @@ def createMessage(title, buildPassed, fields, footer = null)
 
 def sendMessage(message, webhook)
 {
-   bat(script: """
-      curl -X POST ^
-      -H "Content-Type: application/json" ^
-      -d \"${message}\" ^
-      ${webhook}
-   """)
+   bat(script: "curl -X POST -H \"Content-Type: application/json\" -d \"${message}\" ${webhook}")
 }
 
 def succeeded(config, platform, webhook)

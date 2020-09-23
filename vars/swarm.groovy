@@ -1,17 +1,14 @@
 import groovy.json.JsonOutput
 def swarmInfo = null
 
-def init(user, ticket, url)
+def init(swarmUser, p4ticket, swarmUrl)
 {
-    swarmInfo = [user:null, ticket:null, url:null]
-    swarmInfo.user = user
-    swarmInfo.ticket = ticket
-    swarmInfo.url = url
+   swarmInfo = [user: swarmUser, ticket: p4ticket, url: swarmUrl]
 }
 
 def clear() 
 {
-    swarmInfo.clear()
+   swarmInfo.clear()
 }
 
 def upVote(id) 
@@ -31,30 +28,30 @@ def comment(id, comment)
 
 def needsReview(id)
 {
-    setState(id,"needsReview")
+   setState(id, "needsReview")
 }
 
 def needsRevision(id)
 {
-    setState(id,"needsRevision")
+   setState(id, "needsRevision")
 }
 
 def approve(id)
 {
-    setState(id,"approved")
+   setState(id, "approved")
 }
 
 def archive(id)
 {
-    setState(id,"archived")
+   setState(id, "archived")
 }
 
 def reject(id)
 {
-    setState(id,"rejected")
+   setState(id, "rejected")
 }
 
 def setState(id, state)
 {
-    script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X PATCH -d \"state=${state}\" \"${swarmInfo.url}/api/v9/reviews/${id}/state/\""
+   script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X PATCH -d \"state=${state}\" \"${swarmInfo.url}/api/v9/reviews/${id}/state/\""
 }
