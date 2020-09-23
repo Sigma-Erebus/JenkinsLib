@@ -34,7 +34,7 @@ def mentionGroup(groupName, groups)
 
    def message = users.join(",")
    users.each {
-      message = message.replace("${it}", "<@${it}>")
+      message = message.replace("${it}", "<@!${it}>")
    }
    message = message.replace(",", " ")
 
