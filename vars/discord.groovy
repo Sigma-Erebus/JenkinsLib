@@ -51,6 +51,7 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
       }
    }
    message = message.replace(",", " ")
+   message = "${groupName}: " + message
 
    return message
 }
