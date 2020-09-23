@@ -12,7 +12,7 @@ def createGroup(users, groupName, groups)
    groups.add(groupJSON)
 }
 
-def getGroup(groupName, groups)
+def getUsers(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
 
@@ -24,16 +24,19 @@ def getGroup(groupName, groups)
          users = groupsParsed.get("users")
       }
    }
-   
-   def message = users.join(",")
 
+   return users
+}
+
+def mentionGroup(groupName, groups)
+{
+   def users = getUsers(groupName, groups)
+
+   def message = users.join(",")
    users.each {
       message = message.replace("${it}", "<@${it}>")
    }
-
-   message = message.replace(",", " , ")
-
-   return message
+   message = message.replace(",", " ")
 }
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
@@ -115,7 +118,6 @@ def newReview(swarmUrl, webhook, description = null)
                                      value:"${swarmUrl}/reviews/${env.P4_REVIEW}"],
                                      [name:"Participants", 
                                      value:"${description}"]],
-                                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"],
-                                     "${description}")
+                                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
                                  , webhook)
 }
