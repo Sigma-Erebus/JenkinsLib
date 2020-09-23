@@ -1,40 +1,54 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-def createGroup(users, groupName, groups)
+def createGroup(members, groupName, groups)
 {
    def group = [
       name: groupName,
-      users: users
+      members: members
    ]
 
    def groupJSON = JsonOutput.toJson(group)
    groups.add(groupJSON)
 }
 
-def getUsers(groupName, groups)
+def getMembersOfGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
 
-   def users = ""
+   def members = ""
    groups.each {
       def groupsParsed = jsonSlurper.parseText(it)
       if (groupsParsed.get("name") == groupName)
       {
-         users = groupsParsed.get("users")
+         members = groupsParsed.get("members")
       }
    }
 
-   return users
+   return members
 }
 
-def mentionGroup(groupName, groups)
+def mentionGroup(groupName, groups, typeOfGroup = "custom")
 {
-   def users = getUsers(groupName, groups)
+   def members = getMembersOfGroup(groupName, groups)
 
-   def message = users.join(",")
-   users.each {
-      message = message.replace("${it}", "<@${it}>")
+   def message = members.join(",")
+   members.each {
+      switch (typeOfGroup) 
+      {            
+         case "custom":
+            message = message.replace("${it}", "<@${it}>")
+            break
+         case "role":
+            message = message.replace("${it}", "<@&${it}>")
+            break
+         case "channel":
+            message = message.replace("${it}", "<#${it}>")
+            break
+         default: 
+            message = message.replace("${it}", "<@${it}>")
+            break
+      }
    }
    message = message.replace(",", " ")
 
@@ -48,18 +62,18 @@ def createMessage(title, messageColor, fields, footer = null, content = null)
 
    switch (messageColor) 
    {            
-         case "green":
-            color = 65280 // Green
-            break
-         case "yellow":
-            color = 16776960 // Yellow
-            break
-         case "red":
-            color = 16711680 // Red
-            break
-         default: 
-            color = 0 // Transparant
-            break
+      case "green":
+         color = 65280 // Green
+         break
+      case "yellow":
+         color = 16776960 // Yellow
+         break
+      case "red":
+         color = 16711680 // Red
+         break
+      default: 
+         color = 0 // Transparant
+         break
    }
 
    def body = [embeds: 
