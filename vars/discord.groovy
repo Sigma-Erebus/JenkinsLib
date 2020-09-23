@@ -4,9 +4,9 @@ import groovy.json.JsonSlurper
 def createGroup(users, groupName, groups)
 {
    def group = [
-      name: groupName {
+      name: groupName [
          users: users
-      }
+      ]
    ]
 
    def groupJSON = JsonOutput.toJson(group)
