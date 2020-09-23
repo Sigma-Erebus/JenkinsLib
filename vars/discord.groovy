@@ -13,7 +13,7 @@ def getGroup(groupName, groups)
    def data = null
 
    groups.each {
-      data = jsonSlurper.parseText(it)
+      data = data + jsonSlurper.parseText(it)
    }
    
    return data[groupName]
