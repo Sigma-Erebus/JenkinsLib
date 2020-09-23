@@ -111,6 +111,6 @@ def newReview(swarmUrl, webhook, description = null)
                                      [[name:"A new review is ready", 
                                      value:"${swarmUrl}/reviews/${env.P4_REVIEW}"]],
                                      [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"],
-                                     description)
+                                     "${description}")
                                  , webhook)
 }
