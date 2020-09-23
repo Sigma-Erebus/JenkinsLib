@@ -3,7 +3,7 @@ def p4Info = null
 // Must be called first before calling other functions
 def init(p4credential, p4host, p4workspace, p4viewMapping)
 {
-   p4Info = [credential:p4credential, host:p4host, workspace:p4workspace, viewMapping:p4viewMapping]
+   p4Info = [credential: p4credential, host: p4host, workspace: p4workspace, viewMapping: p4viewMapping]
    p4sync charset: 'none', credential: p4Info.credential, format: 'jenkins-${JOB_NAME}', populate: autoClean(delete: false, modtime: false, parallel: [enable: false, minbytes: '1024', minfiles: '1', threads: '4'], pin: '', quiet: true, replace: true, tidy: false), source: templateSource(p4Info.workspace)
 }
 
@@ -43,4 +43,15 @@ def getChangelistDescr(id)
 def getCurrChangelistDescr()
 {
    return getChangelistDescr(env.P4_CHANGELIST)
+}
+
+def isReview(id, prefix = "[R]")
+{
+   def desc = getChangelistDescr(id)
+   if (desc.startsWith(prefix))
+   {
+      return true
+   }
+
+   return false
 }
