@@ -50,10 +50,21 @@ def getCurrChangelistDescr()
    return getChangelistDescr(env.P4_CHANGELIST)
 }
 
-def hasReviewTag(id, tag = "[R]")
+def reviewHasTag(id, tag = "[R]")
 {
    def desc = getChangelistDescr(id)
-   if (desc.startsWith(tag))
+   if (desc.contains(tag))
+   {
+      return true
+   }
+
+   return false
+}
+
+def currReviewHasTag(tag = "[R]")
+{
+   def desc = getCurrChangelistDescr()
+   if (desc.contains(tag))
    {
       return true
    }
