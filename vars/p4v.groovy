@@ -1,24 +1,35 @@
-def sync(credential, workspace)
+def p4Info = null
+
+// Must be called first before calling other functions
+def init(credential, host, workspace, viewMapping)
 {
-   p4sync charset: 'none', credential: credential, format: 'jenkins-${JOB_NAME}', populate: autoClean(delete: false, modtime: false, parallel: [enable: false, minbytes: '1024', minfiles: '1', threads: '4'], pin: '', quiet: true, replace: true, tidy: false), source: templateSource(workspace)
+   // Fill array
+   p4Info = [credential:null, host:null, workspace:null, viewMapping:null]
+   p4Info.credential = credential
+   p4Info.host = host
+   p4Info.workspace = workspace
+   p4Info.viewMapping = viewMapping
+
+   // Sync changes
+   p4sync charset: 'none', credential: p4Info.credential, format: 'jenkins-${JOB_NAME}', populate: autoClean(delete: false, modtime: false, parallel: [enable: false, minbytes: '1024', minfiles: '1', threads: '4'], pin: '', quiet: true, replace: true, tidy: false), source: templateSource(p4Info.workspace)
 }
 
-def createTicket(credential, p4host)
+def createTicket()
 {
    def ticket = ""
-   withCredentials([usernamePassword(credentialsId: credential, passwordVariable: 'P4PASS', usernameVariable: 'P4USER')]) 
+   withCredentials([usernamePassword(credentialsId: p4Info.credential, passwordVariable: 'P4PASS', usernameVariable: 'P4USER')]) 
    {
-      bat (script: "echo %P4PASS%| p4 -p ${p4host} -u %P4USER% trust -y")
-      def result = bat(script: "echo %P4PASS%| p4 -p ${p4host} -u %P4USER% login -ap", returnStdout: true)
+      bat (script: "echo %P4PASS%| p4 -p ${p4Info.host} -u %P4USER% trust -y")
+      def result = bat(script: "echo %P4PASS%| p4 -p ${p4Info.host} -u %P4USER% login -ap", returnStdout: true)
       ticket = result.tokenize().last()
    }
    
    return ticket
 }
 
-def getChangelistDescr(id, credential, name, viewMapping)
+def getChangelistDescr(id)
 {
-   def p4 = p4(credential: credential, workspace: manualSpec(charset: 'none', cleanup: false, name: name, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: viewMapping)))
+   def p4 = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping)))
    def changeList = p4.run('describe', '-s', '-S', "${id}")
    def desc = ""
 
@@ -36,7 +47,7 @@ def getChangelistDescr(id, credential, name, viewMapping)
    return desc
 }
 
-def getCurrChangelistDescr(credential, name, viewMapping)
+def getCurrChangelistDescr()
 {
-   return getChangelistDescr(env.P4_CHANGELIST, credential, name, viewMapping)
+   return getChangelistDescr(env.P4_CHANGELIST, p4Info.credential, p4Info.workspace, p4Info.viewMapping)
 }
