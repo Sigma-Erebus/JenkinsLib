@@ -1,4 +1,31 @@
 import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+def createGroup(users, groupName, file)
+{
+   def group = [
+      groupName: users
+   ]
+
+   def groupJSON = JsonOutput.toJson(group)
+
+   if (file.exists())
+   {
+      file.write(groupJSON)
+   }
+   else
+   {
+      echo "File doesn't exist!"
+   }
+}
+
+def getGroup(groupName, file)
+{
+   def jsonSlurper = new JsonSlurper()
+   data = jsonSlurper.parse(file)
+   
+   return data[groupName]
+}
 
 def createMessage(title, messageColor, fields, footer = null, content = null)
 {
