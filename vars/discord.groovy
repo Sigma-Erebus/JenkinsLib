@@ -34,20 +34,22 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
 
    def message = members.toMapString()
    members.each { key, value -> 
-      switch (typeOfGroup) 
-      {            
-         case "custom":
-            message = message.replaceAll(".*", "<@${value}>")
-            break
-         case "role":
-            message = message.replaceAll(".*", "<@&${value}>")
-            break
-         case "channel":
-            message = message.replaceAll(".*", "<#${value}>")
-            break
-         default: 
-            message = message.replaceAll(".*", "<@${value}>")
-            break
+      value.each {
+         switch (typeOfGroup) 
+         {            
+            case "custom":
+               message = message.replace("${it}", "<@${it}>")
+               break
+            case "role":
+               message = message.replace("${it}", "<@&${it}>")
+               break
+            case "channel":
+               message = message.replace("${it}", "<#${it}>")
+               break
+            default: 
+               message = message.replace("${it}", "<@${it}>")
+               break
+         }
       }
    }
    //message = message.replace(",", " ")
