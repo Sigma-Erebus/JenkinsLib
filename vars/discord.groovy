@@ -37,16 +37,16 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
       switch (typeOfGroup) 
       {            
          case "custom":
-            message = message.replace("${key}", "<@${value}>")
+            message = message.replaceAll(".*", "<@${value}>")
             break
          case "role":
-            message = message.replace("${key}", "<@&${value}>")
+            message = message.replaceAll(".*", "<@&${value}>")
             break
          case "channel":
-            message = message.replace("${key}", "<#${value}>")
+            message = message.replaceAll(".*", "<#${value}>")
             break
          default: 
-            message = message.replace("${key}", "<@${value}>")
+            message = message.replaceAll(".*", "<@${value}>")
             break
       }
    }
