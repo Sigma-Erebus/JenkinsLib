@@ -29,9 +29,11 @@ def getMembersOfGroup(groupName, groups, isFile = true)
    */
 
    def groupsParsed = jsonSlurper.parseText(groups)
-   if (groupsParsed.get("name") == groupName)
-   {
-      members = groupsParsed.get("members")
+   groupsParsed.each {
+      if (groupsParsed.get("name") == groupName)
+      {
+         members = groupsParsed.get("members")
+      }
    }
 
    return members
