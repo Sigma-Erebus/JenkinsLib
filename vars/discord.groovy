@@ -16,7 +16,7 @@ def getMembersOfGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
 
-   def members = ""
+   def members = null
    groups.each {
       def groupsParsed = jsonSlurper.parseText(it)
       if (groupsParsed.get("name") == groupName)
@@ -32,8 +32,9 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
 {
    def members = getMembersOfGroup(groupName, groups)
 
+   def message = ""
    //def message = members.join(",")
-   members.each { key, value -> 
+   members[groupName].each { key, value -> 
       switch (typeOfGroup) 
       {            
          case "custom":
