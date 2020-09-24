@@ -32,7 +32,7 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
 {
    def members = getMembersOfGroup(groupName, groups)
 
-   def message = members.join(",")
+   //def message = members.join(",")
    members.each { key, value -> 
       switch (typeOfGroup) 
       {            
@@ -50,7 +50,7 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
             break
       }
    }
-   message = message.replace(",", " ")
+   //message = message.replace(",", " ")
    message = "${groupName}: " + message
 
    return message
