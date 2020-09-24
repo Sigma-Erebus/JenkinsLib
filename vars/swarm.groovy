@@ -1,6 +1,7 @@
 import groovy.json.JsonOutput
 def swarmInfo = null
 
+// Must be called first before calling other functions
 def init(swarmUser, p4ticket, swarmUrl)
 {
    swarmInfo = [user: swarmUser, ticket: p4ticket, url: swarmUrl]
