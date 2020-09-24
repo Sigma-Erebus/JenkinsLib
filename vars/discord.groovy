@@ -33,7 +33,7 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
    def members = getMembersOfGroup(groupName, groups)
 
    //def message = ""
-   def message = members.inspect()
+   def message = members.toMapString()
    members.each { key, value -> 
       switch (typeOfGroup) 
       {            
