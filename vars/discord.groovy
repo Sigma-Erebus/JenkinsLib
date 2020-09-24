@@ -32,8 +32,8 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
 {
    def members = getMembersOfGroup(groupName, groups)
 
-   def message = ""
-   //def message = members.join(",")
+   //def message = ""
+   def message = members.inspect()
    members.each { key, value -> 
       switch (typeOfGroup) 
       {            
