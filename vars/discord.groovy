@@ -26,7 +26,7 @@ def getMembersOfGroup(groupName, groups, isFile = true)
    else
    {
       groups.each {
-         def groupsParsed = jsonSlurper.parseText(it)
+         groupsParsed = jsonSlurper.parseText(it)
       }
    }
 
