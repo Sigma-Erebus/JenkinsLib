@@ -25,7 +25,7 @@ def getMembersOfGroup(groupName, groups, isFile = true)
          return null
       }
 
-      def groupsFile = readFile file: groups
+      def groupsFile = readJSON file: groups
 
       def groupsParsed = jsonSlurper.parseText(groupsFile)
       if (groupsParsed.get("name") == groupName)
