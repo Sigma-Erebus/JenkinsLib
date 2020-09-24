@@ -34,7 +34,7 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
 
    def message = ""
    //def message = members.join(",")
-   members[groupName].each { key, value -> 
+   members.each { key, value -> 
       switch (typeOfGroup) 
       {            
          case "custom":
