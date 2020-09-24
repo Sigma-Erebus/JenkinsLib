@@ -26,8 +26,10 @@ def getMembersOfGroup(groupName, groups, isFile = true)
          return null
       }
 
+      echo "Reading file..."
       def groupsFile = readFile(file: groups)
 
+      echo "Parsing file..."
       def groupsParsed = new JsonSlurperClassic().parseText(groupsFile)
       if (groupsParsed.get("name") == groupName)
       {
@@ -36,6 +38,8 @@ def getMembersOfGroup(groupName, groups, isFile = true)
    }
    else // If "groups" is a list
    {
+      echo "should not be called"
+
       groups.each {
          def groupsParsed = jsonSlurper.parseText(it)
          if (groupsParsed.get("name") == groupName)
