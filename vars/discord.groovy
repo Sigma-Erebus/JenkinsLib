@@ -1,5 +1,6 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 def createGroup(members, groupName, groups)
 {
@@ -25,9 +26,9 @@ def getMembersOfGroup(groupName, groups, isFile = true)
          return null
       }
 
-      def groupsFile = readJSON file: "${groups}"
+      def groupsFile = readFile(file: groups)
 
-      def groupsParsed = jsonSlurper.parseText("${groupsFile}")
+      def groupsParsed = new JsonSlurperClassic().parseText(groupsFile)
       if (groupsParsed.get("name") == groupName)
       {
          members = groupsParsed.get("members")
