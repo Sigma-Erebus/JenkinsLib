@@ -13,6 +13,7 @@ def createGroup(members, groupName, groups)
    groups.add(groupJSON)
 }
 
+@NonCPS
 def getMembersOfGroup(groupName, groups, isFile = true)
 {
    def jsonSlurper = new JsonSlurper()
