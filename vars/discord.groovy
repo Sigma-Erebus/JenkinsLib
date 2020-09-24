@@ -13,16 +13,27 @@ def createGroup(members, groupName, groups)
    groups.add(groupJSON)
 }
 
-def getMembersOfGroup(groupName, groups)
+def getMembersOfGroup(groupName, groups, isFile = true)
 {
    def jsonSlurper = new JsonSlurper()
    def members = null
 
-   groups.each {
-      def groupsParsed = jsonSlurper.parseText(it)
+   if (isFile)
+   {
+      def groupsParsed = jsonSlurper.parseText(groups)
       if (groupsParsed.get("name") == groupName)
       {
          members = groupsParsed.get("members")
+      }
+   }
+   else
+   {
+      groups.each {
+         def groupsParsed = jsonSlurper.parseText(it)
+         if (groupsParsed.get("name") == groupName)
+         {
+            members = groupsParsed.get("members")
+         }
       }
    }
 
