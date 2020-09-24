@@ -12,25 +12,44 @@ def createGroup(members, groupName, groups)
    groups.add(groupJSON)
 }
 
-def getMembersOfGroup(groupName, groups)
+def getMembersOfGroup(groupName, groups, isFile = true)
 {
    def jsonSlurper = new JsonSlurper()
-
    def members = null
-   groups.each {
-      def groupsParsed = jsonSlurper.parseText(it)
+
+   if (isFile) // Check if "groups" is a file
+   {
+      if (!fileExists(groups))
+      {
+         log.error("${groups} does not exist.")
+         return null
+      }
+
+      def groupsFile = readFile file: groups
+
+      def groupsParsed = jsonSlurper.parseText(groupsFile)
       if (groupsParsed.get("name") == groupName)
       {
          members = groupsParsed.get("members")
+      }
+   }
+   else // If "groups" is a list
+   {
+      groups.each {
+         def groupsParsed = jsonSlurper.parseText(it)
+         if (groupsParsed.get("name") == groupName)
+         {
+            members = groupsParsed.get("members")
+         }
       }
    }
 
    return members
 }
 
-def mentionGroup(groupName, groups, typeOfGroup = "custom")
+def mentionGroup(groupName, groups, typeOfGroup = "custom", isFile = true)
 {
-   def members = getMembersOfGroup(groupName, groups)
+   def members = getMembersOfGroup(groupName, groups, isFile)
 
    def message = members.toMapString()
    members.each { key, value -> 
