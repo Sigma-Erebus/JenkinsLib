@@ -27,19 +27,19 @@ def getMembersOfGroup(groupName, groups, isFile = true)
       }
 
       def groupsFile = readFile(file: groups)
-      def groupsParsed = jsonSlurper.parseText('${groupsFile}')
+      def groupsParsed = jsonSlurper.parseText("${groupsFile}")
       if (groupsParsed.get("name") == groupName)
       {
-         return groupsParsed.get("members")
+         members = groupsParsed.get("members")
       }
    }
-   else // If "groups" is a list
+   else if (!isFile) // If "groups" is a list
    {
       groups.each {
          def groupsParsed = jsonSlurper.parseText(it)
          if (groupsParsed.get("name") == groupName)
          {
-            return groupsParsed.get("members")
+            members = groupsParsed.get("members")
          }
       }
    }
