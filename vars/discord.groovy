@@ -13,7 +13,6 @@ def createGroup(members, groupName, groups)
    groups.add(groupJSON)
 }
 
-@NonCPS
 def getMembersOfGroup(groupName, groups, isFile = true)
 {
    def jsonSlurper = new JsonSlurper()
@@ -27,11 +26,8 @@ def getMembersOfGroup(groupName, groups, isFile = true)
          return null
       }
 
-      echo "Reading file..."
       def groupsFile = readFile(file: groups)
-
-      echo "Parsing file..."
-      def groupsParsed = new JsonSlurperClassic().parseText(groupsFile)
+      def groupsParsed = jsonSlurper.parseText(groupsFile)
       if (groupsParsed.get("name") == groupName)
       {
          return groupsParsed.get("members")
@@ -39,8 +35,6 @@ def getMembersOfGroup(groupName, groups, isFile = true)
    }
    else // If "groups" is a list
    {
-      echo "should not be called"
-
       groups.each {
          def groupsParsed = jsonSlurper.parseText(it)
          if (groupsParsed.get("name") == groupName)
