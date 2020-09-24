@@ -18,21 +18,21 @@ def getMembersOfGroup(groupName, groups, isFile = true)
    def jsonSlurper = new JsonSlurper()
    def members = null
 
-   if (isFile)
+   if (isFile == true)
    {
       def groupsParsed = jsonSlurper.parseText(groups)
       if (groupsParsed.get("name") == groupName)
       {
-         members = groupsParsed.get("members")
+         return groupsParsed.get("members")
       }
    }
-   else
+   else if (isFile == false)
    {
       groups.each {
          def groupsParsed = jsonSlurper.parseText(it)
          if (groupsParsed.get("name") == groupName)
          {
-            members = groupsParsed.get("members")
+            return groupsParsed.get("members")
          }
       }
    }
@@ -40,9 +40,9 @@ def getMembersOfGroup(groupName, groups, isFile = true)
    return members
 }
 
-def mentionGroup(groupName, groups, typeOfGroup = "custom")
+def mentionGroup(groupName, groups, typeOfGroup = "custom", isFile = true)
 {
-   def members = getMembersOfGroup(groupName, groups)
+   def members = getMembersOfGroup(groupName, groups, isFile)
 
    def message = members.toMapString()
    members.each { key, value -> 
