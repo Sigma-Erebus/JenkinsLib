@@ -28,8 +28,7 @@ def getMembersOfGroup(groupName, groups, isFile = true)
       }
    */
 
-   def reader = new BufferedReader(new InputStreamReader(new FileInputStream(groups), "UTF-8"));
-   def groupsParsed = jsonSlurper.parseText(reader)
+   def groupsParsed = jsonSlurper.parseText(groups)
    groupsParsed.each {
       if (groupsParsed.get("name") == groupName)
       {
