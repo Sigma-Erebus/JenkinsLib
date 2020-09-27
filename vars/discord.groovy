@@ -16,7 +16,7 @@ def createGroup(members, groupName, groups)
 def getMembersOfGroup(groupName, groups, isFile = true)
 {
    def jsonSlurper = new JsonSlurper()
-   def members = null
+   def members = ""
 
    groups.each {
       def groupsParsed = jsonSlurper.parseText(it)
