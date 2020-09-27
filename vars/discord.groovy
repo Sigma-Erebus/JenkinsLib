@@ -13,10 +13,10 @@ def createGroup(members, groupName, groups)
    groups.add(groupJSON)
 }
 
-def getMembersOfGroup(groupName, groups, isFile = true)
+def getMembersOfGroup(groupName, groups)
 {
    def jsonSlurper = new JsonSlurper()
-   def members = ""
+   def members = null
 
    groups.each {
       def groupsParsed = jsonSlurper.parseText(it)
@@ -39,9 +39,9 @@ def getMembersOfGroup(groupName, groups, isFile = true)
    return members
 }
 
-def mentionGroup(groupName, groups, typeOfGroup = "custom", isFile = true)
+def mentionGroup(groupName, groups, typeOfGroup = "custom")
 {
-   def members = getMembersOfGroup(groupName, groups, isFile)
+   def members = getMembersOfGroup(groupName, groups)
 
    def message = members.toMapString()
    members.each { key, value -> 
