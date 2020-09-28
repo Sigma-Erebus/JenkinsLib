@@ -63,7 +63,7 @@ def mentionGroups(groupNames, groups, groupType = "custom")
    def message = ""
 
    groupNames.each {
-      message = message + mentionGroup(it, groups, groupType)
+      message = message + mentionGroup(it, groups, groupType) + "\n"
    }
 
    return message
