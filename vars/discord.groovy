@@ -1,6 +1,5 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-import groovy.json.JsonSlurperClassic
 
 def createGroup(members, groupName, groups)
 {
@@ -25,16 +24,6 @@ def getMembersOfGroup(groupName, groups)
          members = groupsParsed.get("members")
       }
    }
-
-   /*
-   def groupsParsed = jsonSlurper.parseText(groups)
-   groupsParsed.each {
-      if (groupsParsed.get("name") == groupName)
-      {
-         members = groupsParsed.get("members")
-      }
-   }
-   */
 
    return members
 }
@@ -65,6 +54,17 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
    message = message.replace("[", "")
    message = message.replace("]", "")
    message = "${groupName}: " + message
+
+   return message
+}
+
+def mentionGroups(groupNames, groups, groupType = "custom")
+{
+   def message = ""
+
+   groupNames.each {
+      message = message + mentionGroup(it, groups, groupType)
+   }
 
    return message
 }
