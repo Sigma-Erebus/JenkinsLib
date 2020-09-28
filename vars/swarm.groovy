@@ -14,7 +14,6 @@ def clear()
 
 def createReview(id, participants = null, desc = null)
 {
-   p4v.shelve(id)
    bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}\" \"${swarmInfo.url}/api/v9/reviews/\"")
 }
 
