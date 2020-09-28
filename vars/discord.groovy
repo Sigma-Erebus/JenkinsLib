@@ -140,12 +140,12 @@ def failed(config, platform, webhook)
                                  , webhook)
 }
 
-def newReview(swarmUrl, webhook, description = null)
+def newReview(id, swarmUrl, webhook, description = null)
 {
    sendMessage(createMessage(":warning: NEW REVIEW :warning:",
                                      "yellow",
                                      [[name:"A new review is ready", 
-                                     value:"${swarmUrl}/reviews/${p4v.getReviewID(env.P4_CHANGELIST)}"],
+                                     value:"${swarmUrl}/reviews/${id}"],
                                      [name:"Participants", 
                                      value:"${description}"]],
                                      [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"],
