@@ -78,3 +78,13 @@ def currReviewHasTag(tag = "[R]")
 
    return false
 }
+
+def shelve(id)
+{
+   bat(script: "p4 shelve -c ${id}")
+}
+
+def unshelve(id)
+{
+   bat(script: "p4 unshelve -s ${id}")
+}

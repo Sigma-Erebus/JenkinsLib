@@ -12,6 +12,12 @@ def clear()
    swarmInfo.clear()
 }
 
+def createReview(id, participants = null, desc = null)
+{
+   p4v.shelve(id)
+   bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}\" \"${swarmInfo.url}/api/v9/reviews/\"")
+}
+
 def upVote(id) 
 {
    bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST \"${swarmInfo.url}/reviews/${id}/vote/up\"")
@@ -54,5 +60,5 @@ def reject(id)
 
 def setState(id, state)
 {
-   script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X PATCH -d \"state=${state}\" \"${swarmInfo.url}/api/v9/reviews/${id}/state/\""
+   bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X PATCH -d \"state=${state}\" \"${swarmInfo.url}/api/v9/reviews/${id}/state/\"")
 }
