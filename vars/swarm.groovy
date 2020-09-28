@@ -1,4 +1,5 @@
 import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 def swarmInfo = null
 
 // Must be called first before calling other functions
@@ -15,6 +16,12 @@ def clear()
 def createReview(id, participants = null, desc = null)
 {
    bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}\" \"${swarmInfo.url}/api/v9/reviews/\"")
+}
+
+def getReviewID(curlResponse)
+{
+   def reviewInfo = new JsonSlurper().parseText(curlResponse)
+   return reviewInfo.review.id
 }
 
 def upVote(id) 
