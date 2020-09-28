@@ -81,10 +81,12 @@ def currReviewHasTag(tag = "[R]")
 
 def shelve(id)
 {
-   bat(script: "p4 shelve -c ${id}")
+   def p4 = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping)))
+   p4.run('shelve', '-c', "${id}")
 }
 
 def unshelve(id)
 {
-   bat(script: "p4 unshelve -s ${id}")
+   def p4 = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping)))
+   p4.run('unshelve', '-s', "${id}")
 }
