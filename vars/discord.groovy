@@ -105,7 +105,7 @@ def swarmIDtoDiscordID(swarmID, groups)
       def groupsParsed = jsonSlurper.parseText(it)
       if (groupsParsed.get("name") == swarmName)
       {
-         def members = groupsParsed.get("members").keySet()[0]
+         def members = groupsParsed.get("members")
          members.each { key, value ->
             discordID = value
          }
