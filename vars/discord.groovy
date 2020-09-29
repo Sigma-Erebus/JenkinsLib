@@ -97,16 +97,18 @@ def mentionGroups(groupNames, groups)
 
 def swarmIDtoDiscordID(swarmID, groups)
 {
+   def jsonSlurper = new JsonSlurper()
    def swarmName = swarmID.replaceAll("\\d", "")
    def discordID = ""
-
-   def jsonSlurper = new JsonSlurper()
 
    groups.each {
       def groupsParsed = jsonSlurper.parseText(it)
       if (groupsParsed.get("name") == swarmName)
       {
-         discordID = groupsParsed.get("members").keySet()[0]
+         def members = groupsParsed.get("members").keySet()[0]
+         members.each { key, value ->
+            discordID = value
+         }
       }
    }
 
