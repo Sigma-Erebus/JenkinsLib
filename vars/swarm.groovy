@@ -26,6 +26,12 @@ def getReviewID(curlResponse)
    return reviewInfo.review.id
 }
 
+def getReviewAuthor(curlResponse)
+{
+   def reviewInfo = new JsonSlurper().parseText(curlResponse)
+   return reviewInfo.review.author
+}
+
 def upVote(id) 
 {
    bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST \"${swarmInfo.url}/reviews/${id}/vote/up\"")
