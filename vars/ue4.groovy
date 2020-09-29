@@ -1,4 +1,19 @@
-def build(engineRoot, projectPath, config, platform, outputDir)
+def build(engineRoot, projectName, project, config, platform, outputDir, blueprintOnly = false)
 {
-   bat(script: "CALL \"${engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${projectPath}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package")
+   if (!blueprintOnly)
+   {
+      // Build
+      bat(script: "\"${engineRoot}Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" -projectfiles -project=\"${project}\" -game -rocket -progress")
+
+      // Compile
+      bat(script: "\"${engineRoot}Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" ${projectName} ${config} ${platform} -project=\"${project}\" -rocket -editorrecompile -progress -noubtmakefiles -NoHotReloadFromIDE -2019")
+
+      // Package
+      bat(script: "CALL \"${engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package")
+   }
+   else
+   {
+      // Only package since we have a blueprintOnly project
+      bat(script: "CALL \"${engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package")
+   }
 }
