@@ -88,5 +88,5 @@ def shelve(id)
 def unshelve(id)
 {
    def p4s = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping)))
-   p4s.run('unshelve', '-c', "${id}")
+   p4s.run('unshelve', '-s', "${id}")
 }
