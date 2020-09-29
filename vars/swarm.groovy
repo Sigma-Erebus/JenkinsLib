@@ -1,4 +1,3 @@
-import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 def swarmInfo = null
 
@@ -13,9 +12,15 @@ def clear()
    swarmInfo.clear()
 }
 
+def getParticipantsOfGroup(groupsName, group)
+{
+   def members = discord.getMembersOfGroup(groupsName, group)
+   return members.keySet() as String[]
+}
+
 def createReview(id, participants = null, desc = null)
 {
-   def output = bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}\" \"${swarmInfo.url}/api/v9/reviews/\"", returnStdout: true)
+   def output = bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}&description=${desc}&reviewers=${participants}\" \"${swarmInfo.url}/api/v9/reviews/\"", returnStdout: true)
    def responseArray = output.split('\\n')
    return responseArray[2].trim()
 }
