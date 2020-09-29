@@ -163,12 +163,12 @@ def newReview(id, author, swarmUrl, webhook, buildStatus = "not built", descript
                                      "yellow",
                                      [[name:"A new review is ready", 
                                      value:"${swarmUrl}/reviews/${id}"],
+                                     [name:"Author",
+                                     value:"${author}"],
                                      [name:"Participants", 
                                      value:"${description}"],
                                      [name:"Build status",
-                                     value:"Build ${buildStatus}"],
-                                     [name:"Author",
-                                     value:"${author}"]],
+                                     value:"Build ${buildStatus}"]],
                                      [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"],
                                      "${description}")
                                  , webhook)
