@@ -24,7 +24,9 @@ def getParticipantsOfGroups(groupNames, groups)
 
    groupNames.each {
       def participants = getParticipantsOfGroup(it, groups)
-      participantsArray.add(participants.join(","))
+      participants.each {
+         participantsArray.add(it)
+      }
    }
 
    return participantsArray
