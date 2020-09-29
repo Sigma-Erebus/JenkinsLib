@@ -140,7 +140,7 @@ def failed(config, platform, webhook)
                                  , webhook)
 }
 
-def newReview(id, swarmUrl, webhook, buildStatus = "not built", description = null)
+def newReview(id, author, swarmUrl, webhook, buildStatus = "not built", description = null)
 {
    sendMessage(createMessage(":warning: NEW REVIEW :warning:",
                                      "yellow",
@@ -149,7 +149,9 @@ def newReview(id, swarmUrl, webhook, buildStatus = "not built", description = nu
                                      [name:"Participants", 
                                      value:"${description}"],
                                      [name:"Build status",
-                                     value:"Build ${buildStatus}"]],
+                                     value:"Build ${buildStatus}"],
+                                     [name:"Author",
+                                     value:"${author}"]],
                                      [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"],
                                      "${description}")
                                  , webhook)
