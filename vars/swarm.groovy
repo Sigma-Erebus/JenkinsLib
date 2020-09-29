@@ -29,7 +29,7 @@ def getParticipantsOfGroups(groupNames, groups)
       }
    }
 
-   return participantsArray
+   return participantsArray as String[]
 }
 
 def createReview(id, participants = [])
