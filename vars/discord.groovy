@@ -95,6 +95,24 @@ def mentionGroups(groupNames, groups)
    return message
 }
 
+def swarmIDtoDiscordID(swarmID, groups)
+{
+   def swarmName = swarmID.replaceAll("\\d", "")
+   def discordID = ""
+
+   def jsonSlurper = new JsonSlurper()
+
+   groups.each {
+      def groupsParsed = jsonSlurper.parseText(it)
+      if (groupsParsed.get("name") == swarmName)
+      {
+         discordID = groupsParsed.get("members").keySet()[0]
+      }
+   }
+
+   return discordID
+}
+
 def createMessage(title, messageColor, fields, footer = null, content = null)
 {
    // Color must be decimal value
