@@ -28,15 +28,32 @@ def getMembersOfGroup(groupName, groups)
    return members
 }
 
-def mentionGroup(groupName, groups, typeOfGroup = "custom")
+def getGroupType(groupName, groups)
+{
+   def jsonSlurper = new JsonSlurper()
+   def type = null
+
+   groups.each {
+      def groupsParsed = jsonSlurper.parseText(it)
+      if (groupsParsed.get("name") == groupName)
+      {
+         type = groupsParsed.get("type")
+      }
+   }
+
+   return type
+}
+
+def mentionGroup(groupName, groups)
 {
    def members = getMembersOfGroup(groupName, groups)
+   def groupType = getGroupType(groupName, groups)
 
    def message = members.toMapString()
    members.each { key, value -> 
-      switch (typeOfGroup) 
+      switch (groupType)
       {            
-         case "custom":
+         case "user":
             message = message.replace("${key}:${value}", "<@${value}>")
             break
          case "role":
@@ -58,12 +75,12 @@ def mentionGroup(groupName, groups, typeOfGroup = "custom")
    return message
 }
 
-def mentionGroups(groupNames, groups, groupType = "custom")
+def mentionGroups(groupNames, groups)
 {
    def message = ""
 
    groupNames.each {
-      message = message + mentionGroup(it, groups, groupType) + "\n"
+      message = message + mentionGroup(it, groups) + "\n"
    }
 
    return message
