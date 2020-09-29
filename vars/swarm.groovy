@@ -16,7 +16,7 @@ def clear()
 def createReview(id, participants = null, desc = null)
 {
    def response = bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}\" \"${swarmInfo.url}/api/v9/reviews/\"", returnStdout: true)
-   return reponse
+   return response
 }
 
 def getReviewID(curlResponse)
