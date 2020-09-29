@@ -18,6 +18,18 @@ def getParticipantsOfGroup(groupsName, group)
    return members.keySet() as String[]
 }
 
+def getParticipantsOfGroups(groupNames, groups)
+{
+   def participantsArray = []
+
+   groupNames.each {
+      def participants = getParticipantsOfGroup(it, groups)
+      participantsArray.add(participants.join(","))
+   }
+
+   return participantsArray
+}
+
 def createReview(id, participants = null, desc = null)
 {
    def output = bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}&description=${desc}&reviewers=${participants}\" \"${swarmInfo.url}/api/v9/reviews/\"", returnStdout: true)
