@@ -16,6 +16,8 @@ def init(p4credential, p4host, p4workspace, p4viewMapping, cleanForce = true)
 
 def clear()
 {
+   def p4s = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping)))
+   p4s.run('revert', '-a')
    p4Info.clear()
 }
 
