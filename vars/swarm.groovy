@@ -29,12 +29,20 @@ def getParticipantsOfGroups(groupNames, groups)
       }
    }
 
-   return participantsArray as String[]
+   return participantsArray
 }
 
-def createReview(id, participants = [])
+def createReview(id, participants = null)
 {
-   def output = bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}&reviewers=[]${participants}\" \"${swarmInfo.url}/api/v9/reviews/\"", returnStdout: true)
+   def reviewers = ""
+   if (participants)
+   {
+      participants.each {
+         reviewers = reviewers + "-d \"reviewers[]=${it} \""
+      }
+   }
+
+   def output = bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}\" \"${reviewers}\" \"${swarmInfo.url}/api/v9/reviews/\"", returnStdout: true)
    def responseArray = output.split('\\n')
    return responseArray[2].trim()
 }
