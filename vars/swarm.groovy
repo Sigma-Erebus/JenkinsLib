@@ -34,7 +34,7 @@ def getParticipantsOfGroups(groupNames, groups)
 
 def createReview(id, participants = [])
 {
-   def output = bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}&reviewers=${participants}\" \"${swarmInfo.url}/api/v9/reviews/\"", returnStdout: true)
+   def output = bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"change=${id}&reviewers=[]${participants}\" \"${swarmInfo.url}/api/v9/reviews/\"", returnStdout: true)
    def responseArray = output.split('\\n')
    return responseArray[2].trim()
 }
