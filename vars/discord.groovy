@@ -69,6 +69,10 @@ def mentionGroup(groupName, groups)
                break
          }
       }
+      else
+      {
+         message = message.replace("${key}:", "")
+      }
    }
 
    // Format message
