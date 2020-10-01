@@ -4,7 +4,7 @@ A Shared Library to reuse functions between Jenkins Pipelines
 ## Groups system:
 The Swarm and Discord scripts read from a JSON file containing groups.
 
-**Format**
+### Format
 The format for these groups look like this:
 ```{"name":"<GROUPNAME>","members":{"<SWARM_ID>":"<DISCORD_ID>"},"type":"<GROUPTYPE>"}```
 
@@ -16,7 +16,7 @@ The format for these groups look like this:
 
 ```<GROUPTYPE>``` determines the type of the group. This can be "user", "role" or "channel".
 
-**Example**
+### Example
 Here is an example of a groups.json file:
 ```
 {"name":"<ROLE_NAME>","members":{"<FIRST_USER_SWARM_ID>":"<DISCORD_ROLE_ID","<SECOND_USER_SWARM_ID>":"","<THIRD_USER_SWARM_ID>":""},"type":"role"}
