@@ -6,10 +6,11 @@ A Shared Library to reuse functions between Jenkins Pipelines
 **Format**
 The format for these groups look like this:
 ```{"name":"<GROUPNAME>","members":{"<SWARM_ID>":"<DISCORD_ID>"},"type":"<GROUPTYPE>"}```
-<GROUPNAME> is the name of the group. This could be "PR", "David" or "GENERAL" for example.
-<SWARM_ID> is the Swarm ID of a user from the <GROUPTYPE>.
-<DISCORD_ID> is the Discord ID of a user from the <GROUPTYPE>.
-<GROUPTYPE> determines the type of the group. This can be "user", "role" or "channel".
+
+```<GROUPNAME>``` is the name of the group. This could be "PR", "David" or "GENERAL" for example.
+```<SWARM_ID>``` is the Swarm ID of a user from the ```<GROUPTYPE>```.
+```<DISCORD_ID>``` is the Discord ID of a user from the ```<GROUPTYPE>```.
+```<GROUPTYPE>``` determines the type of the group. This can be "user", "role" or "channel".
 
 **Example**
 Here is an example of a groups.json file:
