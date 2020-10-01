@@ -2,6 +2,7 @@
 A Shared Library to reuse functions between Jenkins Pipelines
 
 ## Groups system:
+The Swarm and Discord scripts read from a JSON file containing groups.
 
 **Format**
 The format for these groups look like this:
