@@ -14,10 +14,10 @@ def init(p4credential, p4host, p4workspace, p4viewMapping, cleanForce = true)
    }
 }
 
-def clean(id)
+def clean()
 {
    def p4s = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping)))
-   p4s.run('revert', '-c', "${id}")
+   p4s.run('revert', '-c', 'default')
    p4Info.clear()
 }
 
@@ -57,31 +57,4 @@ def getChangelistDescr(id)
 def getCurrChangelistDescr()
 {
    return getChangelistDescr(env.P4_CHANGELIST)
-}
-
-def reviewHasTag(id, tag = "[R]")
-{
-   def desc = getChangelistDescr(id)
-   if (desc.contains(tag))
-   {
-      return true
-   }
-
-   return false
-}
-
-def currReviewHasTag(tag = "[R]")
-{
-   def desc = getCurrChangelistDescr()
-   if (desc.contains(tag))
-   {
-      return true
-   }
-
-   return false
-}
-
-def unshelve(id)
-{
-   p4unshelve credential: p4Info.credential, ignoreEmpty: false, resolve: 'none', shelf: id, tidy: false, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: false, backup: true, changeView: '', clobber: true, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping))
 }
