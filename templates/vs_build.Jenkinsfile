@@ -41,7 +41,7 @@ pipeline {
                 }
             }
         }
-        stage("ue4-build") {
+        stage("vs-build") {
             steps {
                 script {
                     log.currStage()
