@@ -42,6 +42,7 @@ Handles all Perforce related functions
 * ```init(p4credential, p4host, p4workspace, p4viewMapping, cleanForce = true)``` - Syncs Perforce workspace (***Should be called before all other p4v functions!***)
 * ```clean()``` - Cleans workspace default changelist (***Don't use other p4v functions after calling this function!***)
 * ```createTicket()``` - Creates a valid ticket for Perforce/Swarm operations
+* ```unshelve(id)``` - Unshelves a shelved changelist
 * ```getChangelistDescr(id)``` - Get the description from a changelist
 * ```getCurrChangelistDescr()``` - Get the description from the current changelist
 
