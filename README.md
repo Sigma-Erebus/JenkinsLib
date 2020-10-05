@@ -12,7 +12,7 @@ The format for these groups look like this:
 
 ```<SWARM_ID>``` is the Swarm ID of a user from the ```<GROUPTYPE>```.
 
-```<DISCORD_ID>``` is the Discord ID of a user from the ```<GROUPTYPE>```.
+```<DISCORD_ID>``` is the Discord ID of a "user", "role" or "channel" from the ```<GROUPTYPE>```.
 
 ```<GROUPTYPE>``` determines the type of the group. This can be "user", "role" or "channel".
 
