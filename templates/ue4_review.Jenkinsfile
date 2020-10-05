@@ -128,7 +128,7 @@ pipeline {
                 }
             }
         }
-		aborted {
+        aborted {
             cleanWs()
         }
         cleanup {
