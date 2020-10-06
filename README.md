@@ -72,6 +72,7 @@ Handles all Unreal Engine 4 related operations
 
 **Functions**
 * ```build(engineRoot, projectName, project, config, platform, outputDir, blueprintOnly = false)``` - Build a (blueprintOnly) Unreal Engine 4 project
+* ```fixupRedirects(engineRoot, project)``` - Fixes up any dangling redirectors in an Unreal Engine 4 project
 
 ### vs.groovy
 Uses MSBuild to compile Visual Studio projects
