@@ -18,7 +18,7 @@ def build(engineRoot, projectName, project, config, platform, outputDir, bluepri
    }
 }
 
-def fixupredirects(engineRoot, project)
+def fixupRedirects(engineRoot, project)
 {
    bat(script: "\"${engineRoot}Engine\\Binaries\\Win64\\UE4Editor.exe\" \"${project}\" -run=ResavePackages -fixupredirects -autocheckout -projectonly -unattended")
 }
