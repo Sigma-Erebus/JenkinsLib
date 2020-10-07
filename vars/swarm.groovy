@@ -61,17 +61,17 @@ def getReviewAuthor(curlResponse)
 
 def upVote(id) 
 {
-   bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST \"${swarmInfo.url}/reviews/${id}/vote/up\"")
+   bat(label: "Upvote Swarm review", script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST \"${swarmInfo.url}/reviews/${id}/vote/up\"")
 }
 
 def downVote(id)
 {
-   bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST \"${swarmInfo.url}/reviews/${id}/vote/down\"")
+   bat(label: "Downvote Swarm review", script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST \"${swarmInfo.url}/reviews/${id}/vote/down\"")
 }
 
 def comment(id, comment)
 {
-   bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"topic=reviews/${id}&body=${comment}\" \"${swarmInfo.url}/api/v9/comments/\"")
+   bat(label: "Comment on Swarm review", script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X POST -d \"topic=reviews/${id}&body=${comment}\" \"${swarmInfo.url}/api/v9/comments/\"")
 }
 
 def needsReview(id)
@@ -101,5 +101,5 @@ def reject(id)
 
 def setState(id, state)
 {
-   bat(script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X PATCH -d \"state=${state}\" \"${swarmInfo.url}/api/v9/reviews/${id}/state/\"")
+   bat(label: "Set state of Swarm review", script: "curl -u \"${swarmInfo.user}:${swarmInfo.ticket}\" -X PATCH -d \"state=${state}\" \"${swarmInfo.url}/api/v9/reviews/${id}/state/\"")
 }

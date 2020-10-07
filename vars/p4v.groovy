@@ -26,8 +26,8 @@ def createTicket()
    def ticket = ""
    withCredentials([usernamePassword(credentialsId: p4Info.credential, passwordVariable: 'P4PASS', usernameVariable: 'P4USER')]) 
    {
-      bat (script: "echo %P4PASS%| p4 -p ${p4Info.host} -u %P4USER% trust -y")
-      def result = bat(script: "echo %P4PASS%| p4 -p ${p4Info.host} -u %P4USER% login -ap", returnStdout: true)
+      bat (label: "Trust connection", script: "echo %P4PASS%| p4 -p ${p4Info.host} -u %P4USER% trust -y")
+      def result = bat(label: "Create P4 ticket", script: "echo %P4PASS%| p4 -p ${p4Info.host} -u %P4USER% login -ap", returnStdout: true)
       ticket = result.tokenize().last()
    }
    

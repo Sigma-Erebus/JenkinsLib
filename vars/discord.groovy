@@ -159,7 +159,7 @@ def createMessage(title, messageColor, fields, footer = null, content = null)
 
 def sendMessage(message, webhook)
 {
-   bat(script: "curl -X POST -H \"Content-Type: application/json\" -d \"${message}\" ${webhook}")
+   bat(label: "Send Discord Message", script: "curl -X POST -H \"Content-Type: application/json\" -d \"${message}\" ${webhook}")
 }
 
 def succeeded(config, platform, webhook)

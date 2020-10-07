@@ -1,6 +1,6 @@
 def upload(source, fileName, clientID, clientSecret, refreshToken, parents)
 {
-   bat(script: """
+   bat(label: "Upload files to Google Drive", script: """
    
       SET "AccessToken="
       FOR /f "tokens=1,2 delims=:, " %%U in ('
