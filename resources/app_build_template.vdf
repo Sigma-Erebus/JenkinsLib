@@ -14,7 +14,7 @@
 	"preview" "<ISPREVIEW>"
 
 	// File path of the local content server if it's enabled.
-	"local" "<LOCALPATH>"
+	"local" "<LOCALCONTENT>"
 
 	// Branch name to automatically set live after successful build, none if empty.
 	// Note that the 'default' branch can not be set live automatically. That must be done through the App Admin panel.
