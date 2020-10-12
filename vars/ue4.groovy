@@ -53,7 +53,7 @@ def runFilteredTests(testFilter, config = "Development", platform = "Win64")
 def runAutomationCommand(testCommand, config = "Development", platform = "Win64")
 {
    log("Running tests in ${config} configuration on ${platform}")
-   def result = bat (label: "Run UE4 Automation Tests", script: "CALL \"${eu4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${eu4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\"", returnStatus: true)
+   def result = bat (label: "Run UE4 Automation Tests", script: "CALL \"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\"", returnStatus: true)
    
    if (result != 0)
    {
