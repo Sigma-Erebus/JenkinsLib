@@ -1,15 +1,16 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-def createGroup(members, groupName, groups)
+def createGroup(groupName, groupMembers, groupType, groupsList)
 {
    def group = [
       name: groupName,
-      members: members
+      members: groupMembers,
+      type: groupType
    ]
 
    def groupJSON = JsonOutput.toJson(group)
-   groups.add(groupJSON)
+   groupsList.add(groupJSON)
 }
 
 def getMembersOfGroup(groupName, groups)
