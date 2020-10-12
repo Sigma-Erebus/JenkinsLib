@@ -17,11 +17,11 @@ def createDepotManifest(depotID, contentRoot, localPath = "*", depotPath = ".", 
    depotManifest = depotManifest.replace("<ISRECURSIVE>", "${isRecursive ? '1' : '0'}")
    depotManifest = depotManifest.replace("<EXCLUDE>", exclude)
 
-   writeFile(file: "depot_build_${depotNumber}.vdf", text: depotManifest)
-   return "depot_build_${depotNumber}.vdf"
+   writeFile(file: "depot_build_${depotID}.vdf", text: depotManifest)
+   return "depot_build_${depotID}.vdf"
 }
 
-def createAppManifest(appID, depotNumber, contentRoot, description = "", isPreview = false, localContentPath = "", branch = "", outputDir= "output")
+def createAppManifest(appID, depotID, contentRoot, description = "", isPreview = false, localContentPath = "", branch = "", outputDir= "output")
 {
    def appManifest = libraryResource("app_build_template.vdf")
 
@@ -32,6 +32,7 @@ def createAppManifest(appID, depotNumber, contentRoot, description = "", isPrevi
    appManifest = appManifest.replace("<BRANCH>", branch)
    appManifest = appManifest.replace("<OUTPUTDIR>", outputDir)
    appManifest = appManifest.replace("<CONTENTROOT>", contentRoot)
+   appManifest = appManifest.replace("<DEPOTID>", depotID)
 
    writeFile(file: "app_build_${appID}.vdf", text: appManifest)
    return "app_build_${appID}.vdf"
