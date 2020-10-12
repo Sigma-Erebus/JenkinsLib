@@ -39,8 +39,6 @@ def createAppManifest(appID, depotNumber, contentRoot, description = "", isPrevi
 
 def tryDeploy(appManifest)
 {
-   def guardCode = null
-
    try
    {
       log("Trying to deploy to Steam without SteamGuard...")
@@ -50,6 +48,7 @@ def tryDeploy(appManifest)
    {
       log.error("Steam deploy failed. Insert Steam Guard Code...")
 
+      def guardCode = null
       timeout(time: 3, unit: 'MINUTES') 
       {
          guardCode = input message: 'Insert Steam Guard code', ok: 'Submit', 
@@ -58,9 +57,7 @@ def tryDeploy(appManifest)
                               string(name: 'Steam Guard Code', defaultValue: '', description: 'Provide the pipeline with the required Steam Guard code.')
                            ]
       }
-   }
-   finally
-   {
+
       if (guardCode)
       {
          deploy(appManifest, guardCode)
@@ -70,9 +67,9 @@ def tryDeploy(appManifest)
          log.error("Failed to provide Steam Guard code.")
          return false
       }
-
-      return true
    }
+
+   return true
 }
 
 def deploy(appManifest, steamGuard = null)
