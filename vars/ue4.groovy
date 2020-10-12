@@ -53,7 +53,7 @@ def runFilteredTests(testFilter, config = "Development", platform = "Win64")
 def runAutomationCommand(testCommand, config = "Development", platform = "Win64")
 {
    log("Running tests in ${config} configuration on ${platform}")
-   def result = bat (label: "Run UE4 Automation Tests", script: "CALL \"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\"", returnStatus: true)
+   def result = bat (label: "Run UE4 Automation Tests", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\"", returnStatus: true)
    
    if (result != 0)
    {
@@ -61,7 +61,7 @@ def runAutomationCommand(testCommand, config = "Development", platform = "Win64"
    }
 }
 
-def fixupRedirects()
+def fixupRedirects(platform = "Win64")
 {
-   bat(label: "Fix up redirectors in UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\Win64\\UE4Editor.exe\" \"${ue4Info.project}\" -run=ResavePackages -fixupredirects -autocheckout -projectonly -unattended")
+   bat(label: "Fix up redirectors in UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor.exe\" \"${ue4Info.project}\" -run=ResavePackages -fixupredirects -autocheckout -projectonly -unattended -stdout")
 }
