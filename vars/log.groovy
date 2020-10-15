@@ -18,7 +18,7 @@ def currStage()
    echo "${STAGE_NAME}"
 }
 
-def logFile(targetFile)
+def file(targetFile)
 {
    def content = readFile(file: targetFile)
    echo "Content of ${targetFile}:\n\n"
