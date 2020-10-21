@@ -28,8 +28,8 @@ pipeline {
         OUTPUTDIR = "${env.WORKSPACE}\\Output"
         
         // Configuration
-        CONFIG = "Development"
-        PLATFORM = "Win64"
+        CONFIG = "Development" // Target list: Unknown, Debug, DebugGame, Development, Shipping, Test
+        PLATFORM = "Win64" // Platform list: Win32, Win64, Linux, Switch, PS4
         
         // Discord
         WEBHOOK_BUILD = "<DISCORD_WEBHOOK>"
