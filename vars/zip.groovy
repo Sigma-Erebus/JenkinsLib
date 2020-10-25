@@ -1,4 +1,4 @@
 def pack(source, archiveName)
 {
-   bat(label: "Pack into zip file", script: "7z a \"${archiveName}.zip\" \"${source}\\*\"")
+   powershell(label: "Pack into zip file", script: "Compress-Archive -Path \"${source}\" -DestinationPath \"${archiveName}.zip\"");
 }
