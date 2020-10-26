@@ -1,9 +1,9 @@
 def ue4Info = null
 
 // Must be called first before calling other functions
-def build(ue4EngineRoot, eu4ProjectName, eu4Project, config, platform, outputDir, blueprintOnly = false, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt")
+def build(ue4EngineRoot, ue4ProjectName, ue4Project, config, platform, outputDir, blueprintOnly = false, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt")
 {
-   ue4Info = [engineRoot: ue4EngineRoot, projectName: eu4ProjectName, project: eu4Project]
+   ue4Info = [engineRoot: ue4EngineRoot, projectName: ue4ProjectName, project: ue4Project]
    if (!blueprintOnly)
    {
       // Build
