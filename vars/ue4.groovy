@@ -9,7 +9,7 @@ def build(ue4EngineRoot, ue4ProjectName, ue4Project, config, platform, outputDir
       // Build
       bat(label: "Run UnrealBuildTool", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" -projectfiles -project=\"${ue4Info.project}\" -Game -Rocket -Progress -NoIntellisense -WaitMutex -Platforms=\"${platform}\" PrecompileForTargets = PrecompileTargetsType.Any;")
       
-      if (platform.toLowerCase() != "ps4")
+      if (config.toLowerCase() == "development" && platform.toLowerCase() != "ps4")
       {
          bat(label: "Build UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\Build.bat\" ${ue4Info.projectName}Editor ${platform} ${config} \"${ue4Info.project}\" -Log=\"${logFile}\"")
       }
