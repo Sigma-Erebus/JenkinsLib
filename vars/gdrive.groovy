@@ -15,7 +15,7 @@ def upload(source, fileName, clientID, clientSecret, refreshToken, parents)
       curl -X POST ^
       -H "Authorization: Bearer %AccessToken%" ^
       -F "metadata={ mimeType: 'application/x-zip-compressed', kind: 'drive#file', name: '${fileName}.zip', parents: ['${parents}'] };type=application/json;charset=UTF-8" ^
-      -F "file=${source};type=application/x-zip-compressed" ^
+      -F "file=@${source};type=application/x-zip-compressed" ^
       https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart
    
    """)
