@@ -22,7 +22,6 @@ def getParticipantsOfGroup(groupName, groups)
       if (group.name == groupName)
       {
          participants = group.swarmID
-         break
       }
    }
 

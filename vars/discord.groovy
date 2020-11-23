@@ -26,7 +26,6 @@ def mentionGroup(groupName, groups)
       {
          groupType = group.type
          discordID = group.discordID
-         break
       }
    }
 
@@ -76,7 +75,6 @@ def swarmIDtoDiscordID(swarmID, groups)
       if (group.name == swarmName)
       {
          discordID = group.discordID
-         break
       }
    }
 
