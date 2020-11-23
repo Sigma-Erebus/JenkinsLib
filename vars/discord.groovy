@@ -1,11 +1,12 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-def createGroup(groupName, groupMembers, groupType, groupsList)
+def createGroup(groupName, groupDiscordID, groupSwarmID, groupType, groupsList)
 {
    def group = [
       name: groupName,
-      members: groupMembers,
+      discordID: groupDiscordID,
+      swarmID: groupSwarmID,
       type: groupType
    ]
 
@@ -13,73 +14,40 @@ def createGroup(groupName, groupMembers, groupType, groupsList)
    groupsList.add(groupJSON)
 }
 
-def getMembersOfGroup(groupName, groups)
-{
-   def jsonSlurper = new JsonSlurper()
-   def members = null
-
-   groups.each {
-      def groupsParsed = jsonSlurper.parseText(it)
-      if (groupsParsed.get("name") == groupName)
-      {
-         members = groupsParsed.get("members")
-      }
-   }
-
-   return members
-}
-
-def getGroupType(groupName, groups)
-{
-   def jsonSlurper = new JsonSlurper()
-   def type = null
-
-   groups.each {
-      def groupsParsed = jsonSlurper.parseText(it)
-      if (groupsParsed.get("name") == groupName)
-      {
-         type = groupsParsed.get("type")
-      }
-   }
-
-   return type
-}
-
 def mentionGroup(groupName, groups)
 {
-   def members = getMembersOfGroup(groupName, groups)
-   def groupType = getGroupType(groupName, groups)
+   def groupType = ""
+   def discordID = ""
 
-   def message = members.toMapString()
-   members.each { key, value -> 
-      if (value?.trim()) 
+   groups.each {
+      def groupsParsed = new JsonSlurper().parseText(it)
+      if (groupsParsed.name == groupName)
       {
-         switch (groupType)
-         {            
-            case "user":
-               message = message.replace("${key}:${value}", "<@${value}>")
-               break
-            case "role":
-               message = message.replace("${key}:${value}", "<@&${value}>")
-               break
-            case "channel":
-               message = message.replace("${key}:${value}", "<#${value}>")
-               break
-            default: 
-               message = message.replace("${key}:${value}", "<@${value}>")
-               break
-         }
+         groupType = groupsParsed.type
+         discordID = groupsParsed.discordID
+         break
       }
-      else
-      {
-         message = message.replace("${key}:", "")
-      }
+   }
+
+   def message = discordID
+   switch (groupType)
+   {            
+      case "user":
+         message = message.replace(discordID, "<@${discordID}>")
+         break
+      case "role":
+         message = message.replace(discordID, "<@&${discordID}>")
+         break
+      case "channel":
+         message = message.replace(discordID, "<#${discordID}>")
+         break
+      default: 
+         message = message.replace(discordID, "<@${discordID}>")
+         break
    }
 
    // Format message
    message = message.replace(",", " ")
-   message = message.replace("[", "")
-   message = message.replace("]", "")
    message = "${groupName}: " + message
 
    return message
@@ -98,18 +66,15 @@ def mentionGroups(groupNames, groups)
 
 def swarmIDtoDiscordID(swarmID, groups)
 {
-   def jsonSlurper = new JsonSlurper()
    def swarmName = swarmID.replaceAll("\\d", "")
    def discordID = ""
 
    groups.each {
-      def groupsParsed = jsonSlurper.parseText(it)
-      if (groupsParsed.get("name") == swarmName)
+      def groupsParsed = new JsonSlurper().parseText(it)
+      if (groupsParsed.name == swarmName)
       {
-         def members = groupsParsed.get("members")
-         members.each { key, value ->
-            discordID = value
-         }
+         discordID = groupsParsed.discordID
+         break
       }
    }
 

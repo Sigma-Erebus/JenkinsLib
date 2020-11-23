@@ -12,10 +12,20 @@ def clear()
    swarmInfo.clear()
 }
 
-def getParticipantsOfGroup(groupsName, group)
+def getParticipantsOfGroup(groupName, groups)
 {
-   def members = discord.getMembersOfGroup(groupsName, group)
-   return members.keySet() as String[]
+   def participants = []
+
+   groups.each {
+      def groupsParsed = new JsonSlurper().parseText(it)
+      if (groupsParsed.name == groupName)
+      {
+         participants = groupsParsed.swarmID
+         break
+      }
+   }
+
+   return participants
 }
 
 def getParticipantsOfGroups(groupNames, groups)
