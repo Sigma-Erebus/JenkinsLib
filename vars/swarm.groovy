@@ -15,12 +15,13 @@ def clear()
 def getParticipantsOfGroup(groupName, groups)
 {
    def participants = []
+   def groupsParsed = new JsonSlurper().parseText(groups)
 
-   groups.each {
-      def groupsParsed = new JsonSlurper().parseText(it)
-      if (groupsParsed.name == groupName)
+   groupsParsed.groups.each { group ->
+      
+      if (group.name == groupName)
       {
-         participants = groupsParsed.swarmID
+         participants = group.swarmID
          break
       }
    }

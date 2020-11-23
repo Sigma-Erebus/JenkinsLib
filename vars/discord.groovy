@@ -18,13 +18,14 @@ def mentionGroup(groupName, groups)
 {
    def groupType = ""
    def discordID = ""
+   def groupsParsed = new JsonSlurper().parseText(groups)
 
-   groups.each {
-      def groupsParsed = new JsonSlurper().parseText(it)
-      if (groupsParsed.name == groupName)
+   groupsParsed.groups.each { group ->
+      
+      if (group.name == groupName)
       {
-         groupType = groupsParsed.type
-         discordID = groupsParsed.discordID
+         groupType = group.type
+         discordID = group.discordID
          break
       }
    }
@@ -68,12 +69,13 @@ def swarmIDtoDiscordID(swarmID, groups)
 {
    def swarmName = swarmID.replaceAll("\\d", "")
    def discordID = ""
+   def groupsParsed = new JsonSlurper().parseText(groups)
 
-   groups.each {
-      def groupsParsed = new JsonSlurper().parseText(it)
-      if (groupsParsed.name == swarmName)
+   groupsParsed.groups.each { group ->
+      
+      if (group.name == swarmName)
       {
-         discordID = groupsParsed.discordID
+         discordID = group.discordID
          break
       }
    }
