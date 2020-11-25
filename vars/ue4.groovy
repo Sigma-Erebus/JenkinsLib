@@ -66,12 +66,49 @@ def runFilteredTests(testFilter, config = "Development", platform = "Win64")
 def runAutomationCommand(testCommand, config = "Development", platform = "Win64")
 {
    log("Running tests in ${config} configuration on ${platform}")
-   def result = bat (label: "Run UE4 Automation Tests", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\"", returnStatus: true)
+   def result = bat (label: "Run UE4 Automation Tests", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportOutputPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\"", returnStatus: true)
    
    if (result != 0)
    {
       unstable "Some tests did not pass!"
    }
+}
+
+// Author: https://www.emidee.net/ue4/2018/11/13/UE4-Unit-Tests-in-Jenkins.html
+def generateUnitTestsReport() 
+{
+    def json = readFile file: 'Saved/UnitTestsReport/index.json', encoding: "UTF-8"
+    // Needed because the JSON is encoded in UTF-8 with BOM
+
+    json = json.replace( "\uFEFF", "" );
+
+    def xml_content = getJUnitXMLContentFromJSON( json )
+
+    writeFile file: "${env.WORKSPACE}\\Logs\\UnitTestsReport\\junit.xml", text: xml_content.toString()
+}
+
+// Author: https://www.emidee.net/ue4/2018/11/13/UE4-Unit-Tests-in-Jenkins.html
+@NonCPS
+def getJUnitXMLContentFromJSON( String json_content ) {
+    def j = new JsonSlurper().parseText( json_content )
+    
+    def sw = new StringWriter()
+    def builder = new MarkupBuilder( sw )
+
+    builder.doubleQuotes = true
+    builder.mkp.xmlDeclaration version: "1.0", encoding: "utf-8"
+
+    builder.testsuite( tests: j.succeeded + j.failed, failures: j.failed, time: j.totalDuration ) {
+        for ( test in j.tests ) {
+            builder.testcase( name: test.testDisplayName, classname: test.fullTestPath, status: test.state ) {
+                for ( entry in test.entries ) { 
+                    builder.failure( message: entry.event.message, type: entry.event.type, entry.filename + " " + entry.lineNumber )
+                }
+            }
+        }
+    } 
+
+    return sw.toString()
 }
 
 def fixupRedirects(platform = "Win64")
