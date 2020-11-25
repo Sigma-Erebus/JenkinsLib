@@ -6,22 +6,52 @@ The Swarm and Discord scripts read from a JSON file containing groups.
 
 ### Format
 The format for these groups look like this:
-```{"name":"<GROUPNAME>","members":{"<SWARM_ID>":"<DISCORD_ID>"},"type":"<GROUPTYPE>"}```
+```
+{
+	"groups": [
+		{
+			"name": "<GROUPNAME>",
+			"discordID": "<DISCORD_ID>",
+			"swarmID": ["<SWARM_ID>", "<SWARM_ID>"],
+			"type": "<GROUPTYPE>"
+		}
+	]
+}
+```
 
 ```<GROUPNAME>``` is the name of the group. This could be "PR", "David" or "GENERAL" for example.
 
-```<SWARM_ID>``` is the Swarm ID of a user from the ```<GROUPTYPE>```.
-
 ```<DISCORD_ID>``` is the Discord ID of a "user", "role" or "channel" from the ```<GROUPTYPE>```.
+
+```<SWARM_ID>``` is the Swarm ID of a user from the ```<GROUPTYPE>```.
 
 ```<GROUPTYPE>``` determines the type of the group. This can be "user", "role" or "channel".
 
 ### Example
 Here is an example of a groups.json file:
 ```
-{"name":"<ROLE_NAME>","members":{"<FIRST_USER_SWARM_ID>":"<DISCORD_ROLE_ID","<SECOND_USER_SWARM_ID>":"","<THIRD_USER_SWARM_ID>":""},"type":"role"}
-{"name":"<CHANNEL_NAME>","members":{"<FIRST_USER_SWARM_ID>":"<DISCORD_CHANNEL_ID","<SECOND_USER_SWARM_ID>":""},"type":"channel"}
-{"name":"<NAME_USER>","members":{"<USER_SWARM_ID>":"<DISCORD_USER_ID>"},"type":"user"}
+{
+	"groups": [
+		{
+			"name": "<ROLE_NAME>",
+			"discordID": "<DISCORD_ROLE_ID>",
+			"swarmID": ["<SWARM_ID_ONE>", "<SWARM_ID_TWO>"],
+			"type": "role"
+		},
+		{
+			"name": "<CHANNEL_NAME>",
+			"discordID": "<DISCORD_CHANNEL_ID>",
+			"swarmID": ["<SWARM_ID_ONE>", "<SWARM_ID_TWO>", "<SWARM_ID_THREE>"],
+			"type": "channel"
+		},
+		{
+			"name": "<USER_NAME>",
+			"discordID": "<DISCORD_USER_ID>",
+			"swarmID": ["<SWARM_ID>"],
+			"type": "user"
+		}
+	]
+}
 ```
 
 ## Scripts:
@@ -52,7 +82,7 @@ Allows operations on the swarm server
 **Functions:**
 * ```init(swarmUser, p4ticket, swarmUrl)``` - Initializes swarm data (***Should be called before all other swarm functions!***)
 * ```clear()``` - Clears swarm data (***Don't use other swarm functions after calling this function!***)
-* ```getParticipantsOfGroup(groupsName, group)``` - Get participants from a group in a JSON file
+* ```getParticipantsOfGroup(groupName, group)``` - Get participants from a group in a JSON file
 * ```getParticipantsOfGroups(groupNames, groups)``` - Get participants from multiple groups in a JSON file
 * ```createReview(id, participants = null)``` - Create a review from a shelved changelist
 * ```getReviewID(curlResponse)``` - Get the ID of a review
@@ -71,8 +101,12 @@ Allows operations on the swarm server
 Handles all Unreal Engine 4 related operations
 
 **Functions**
-* ```build(engineRoot, projectName, project, config, platform, outputDir, blueprintOnly = false)``` - Build a (blueprintOnly) Unreal Engine 4 project
-* ```fixupRedirects(engineRoot, project)``` - Fixes up any dangling redirectors in an Unreal Engine 4 project
+* ```build(ue4EngineRoot, ue4ProjectName, ue4Project, config, platform, outputDir, blueprintOnly = false, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt")``` - Build a (blueprintOnly) Unreal Engine 4 project
+* ```runAllTests(config = "Development", platform = "Win64")``` - Runs all tests defined in an Unreal Engine 4 project
+* ```runNamedTests(testNames, config = "Development", platform = "Win64")``` - Runs named tests defined in an Unreal Engine 4 project
+* ```runFilteredTests(testFilter, config = "Development", platform = "Win64")``` - Runs all tests in a filter. Valid filters are: Engine, Smoke, Stress, Perf & Product
+* ```runAutomationCommand(testCommand, config = "Development", platform = "Win64")``` - Runs an automation command from the Unreal Engine 4 command line
+* ```fixupRedirects(platform = "Win64")``` - Fixs up all redirects in an Unreal Engien 4 project
 
 ### vs.groovy
 Uses MSBuild to compile Visual Studio projects
@@ -84,9 +118,7 @@ Uses MSBuild to compile Visual Studio projects
 Handles communication between Jenkins and Discord
 
 **Functions:**
-* ```createGroup(members, groupName, groups)``` - Creates a (JSON) group from members from a list
-* ```getMembersOfGroup(groupName, groups)``` - Get the members of a (JSON) group
-* ```getGroupType(groupName, groups)``` - Get the "type" of group (could be "user", "role" or "channel")
+* ```createGroup(groupName, groupDiscordID, groupSwarmID, groupType, groupsList)``` - Adds a JSON group object to a list
 * ```mentionGroup(groupName, groups)``` - Mention a group on discord (***use with discord.createMessage***)
 * ```mentionGroups(groupNames, groups)``` - Mention multiple groups on discord (***use with discord.createMessage***)
 * ```swarmIDtoDiscordID(swarmID, groups)``` - Convert a swarm ID to a discord ID
@@ -100,10 +132,27 @@ Handles communication between Jenkins and Discord
 Used to archive files into a zip folder using 7z
 
 **Functions:**
-* ```pack(source, archiveName)``` - Packs the content of the source folder to <archiveName>.zip
+* ```pack(source, archiveName, use7z = true)``` - Packs the content of the source folder to <archiveName>.zip (Uses 7z by default)
+* ```unpack(archiveName, destination, use7z = true)``` - Unpacks the content of a zip file to the destination folder (Uses 7z by default)
   
 ### gdrive.groovy
 Sends files to Google Drive using cURL
 
 **Functions:**
-* ```upload(source, fileName, clientID, clientSecret, refreshToken, parents)``` - Uploads files to a folder in Google Drive
+* ```upload(source, fileName, clientID, clientSecret, refreshToken, parents)``` - Uploads files to a folder in Google Drive (Shared Drives are supported)
+
+### sentry.groovy
+Tool to diagnose, fix and optimize performance and debug crashes. More information: https://sentry.io/
+
+**Functions:**
+* ```upload(sentryCLIPath, authToken, organisation, project, outputFolder)``` - Uploads debug symbols to Sentry server
+
+### steam.groovy
+Uploads packaged projects to Steam
+
+**Functions:**
+* ```init(steamCredential, steamCmdPath)``` - Initializes steam data (***Should be called before all other steam functions!***)
+* ```createDepotManifest(depotID, contentRoot, localPath = "*", depotPath = ".", isRecursive = true, exclude = "*.pdb")``` - Creates the depot manifest
+* ```createAppManifest(appID, depotID, contentRoot, description = "", isPreview = false, localContentPath = "", branch = "", outputDir= "output")``` - Creates app manifest
+* ```tryDeploy(appManifest)``` - Tries to deploy to Steam using SteamGuard
+* ```deploy(appManifest, steamGuard = null)``` - Deploy to Steam (***Prefer using tryDeploy when trying to deploy to Steam!***)

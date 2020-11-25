@@ -58,7 +58,7 @@ pipeline {
                     
                     withCredentials([file(credentialsId: 'groups', variable: 'GROUPS')]) 
                     {
-                        def groups = Arrays.asList(readFile(file: env.GROUPS).split())
+                        def groups = readFile(file: env.GROUPS)
                         def participants = env.PARTICIPANTS.split("-")
                         
                         def reviewers = swarm.getParticipantsOfGroups(participants, groups)
@@ -90,7 +90,7 @@ pipeline {
                 
                 withCredentials([file(credentialsId: 'groups', variable: 'GROUPS')]) 
                 {
-                    def groups = Arrays.asList(readFile(file: env.GROUPS).split())
+                    def groups = readFile(file: env.GROUPS)
                     def participants = env.PARTICIPANTS.split("-")
                     def author = discord.swarmIDtoDiscordID(env.REVIEW_AUTHOR, groups)
                     
@@ -114,7 +114,7 @@ pipeline {
     
                 withCredentials([file(credentialsId: 'groups', variable: 'GROUPS')]) 
                 {
-                    def groups = Arrays.asList(readFile(file: env.GROUPS).split())
+                    def groups = readFile(file: env.GROUPS)
                     def participants = env.PARTICIPANTS.split("-")
                     def author = discord.swarmIDtoDiscordID(env.REVIEW_AUTHOR, groups)
                     
@@ -129,10 +129,14 @@ pipeline {
             }
         }
         aborted {
+            p4v.clean()
             cleanWs()
         }
         cleanup {
-            cleanWs()
+            script {
+                p4v.clean()
+                cleanWs()
+            }
         }
     }
 }
