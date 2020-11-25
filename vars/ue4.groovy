@@ -1,9 +1,20 @@
 def ue4Info = null
 
 // Must be called first before calling other functions
-def build(ue4EngineRoot, ue4ProjectName, ue4Project, config, platform, outputDir, blueprintOnly = false, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt")
+def init(ue4EngineRoot, ue4ProjectName, ue4Project)
 {
    ue4Info = [engineRoot: ue4EngineRoot, projectName: ue4ProjectName, project: ue4Project]
+}
+
+def clear() 
+{
+   ue4Info.clear()
+}
+
+// Can be called without calling init()
+def build(engineRoot, projectName, project, config, platform, outputDir, blueprintOnly = false, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt")
+{
+   init(engineRoot, projectName, project)
    if (!blueprintOnly)
    {
       // Build
