@@ -79,7 +79,7 @@ def runAutomationCommand(testCommand, config = "Development", platform = "Win64"
 // Author: https://www.emidee.net/ue4/2018/11/13/UE4-Unit-Tests-in-Jenkins.html
 def generateUnitTestsReport() 
 {
-    def json = readFile file: 'Saved/UnitTestsReport/index.json', encoding: "UTF-8"
+    def json = readFile file: 'Logs/UnitTestsReport/index.json', encoding: "UTF-8"
     // Needed because the JSON is encoded in UTF-8 with BOM
 
     json = json.replace( "\uFEFF", "" );
