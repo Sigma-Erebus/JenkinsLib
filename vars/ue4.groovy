@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+import groovy.xml.MarkupBuilder
 def ue4Info = null
 
 // Must be called first before calling other functions
