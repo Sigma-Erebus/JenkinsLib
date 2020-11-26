@@ -180,10 +180,12 @@ def reportTestResults(testResultsJSON, webhook)
                                      "yellow",
                                      [[name:"A new test report is ready", 
                                      value:"${env.BUILD_URL}/testReport/"],
-                                     [name:"${total} tests ran", 
-                                     value:":white_check_mark: ${success}/${total} succeeded\n
-                                             :warning: ${warning}/${total} succeeded with warnings\n
-                                             :x: ${failed}/${total} failed"]],
+                                     [name:":white_check_mark: succeeded", 
+                                     value:"${success}/${total}"],
+                                     [name:":warning: succeeded with warnings", 
+                                     value:"${warning}/${total}"],
+                                     [name:":x: failed", 
+                                     value:"${failed}/${total}"]],
                                      [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
                                  , webhook)
 }
