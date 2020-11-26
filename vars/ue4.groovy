@@ -80,7 +80,7 @@ def getTestResults()
 {
     def json = readFile file: 'Logs/UnitTestsReport/index.json', encoding: "UTF-8"
     json = json.replace( "\uFEFF", "" );
-    return new JsonSlurper().parseText(json)
+    return json
 }
 
 // Author: https://www.emidee.net/ue4/2018/11/13/UE4-Unit-Tests-in-Jenkins.html
