@@ -169,7 +169,7 @@ def newReview(id, author, swarmUrl, webhook, buildStatus = "not built", descript
                                  , webhook)
 }
 
-def reportTestResults(testResultsJSON, webhook)
+def reportTestResults(json, webhook)
 {
    def testResults = new JsonSlurper().parseText(json)
 
