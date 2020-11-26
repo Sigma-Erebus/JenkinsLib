@@ -168,3 +168,22 @@ def newReview(id, author, swarmUrl, webhook, buildStatus = "not built", descript
                                      "${description}")
                                  , webhook)
 }
+
+def reportTestResults(testResultsJSON, webhook)
+{
+   def success = testResultsJSON.succeeded
+   def warning = testResultsJSON.succeededWithWarnings
+   def failed = testResultsJSON.failed
+   def total = success + warning + failed
+
+   sendMessage(createMessage(":clipboard: NEW TEST REPORT :clipboard: ",
+                                     "yellow",
+                                     [[name:"A new test report is ready", 
+                                     value:"${env.BUILD_URL}/testReport/"],
+                                     [name:"${total} tests ran", 
+                                     value:":white_check_mark: ${success}/${total} succeeded\n
+                                             :warning: ${warning}/${total} succeeded with warnings\n
+                                             :x: ${failed}/${total} failed"]],
+                                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
+                                 , webhook)
+}
