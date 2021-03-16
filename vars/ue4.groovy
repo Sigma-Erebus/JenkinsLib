@@ -28,7 +28,7 @@ def build(engineRoot, projectName, project, config, platform, outputDir, bluepri
       }
       
       // Package
-      bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package")
+      bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package -crashreporter")
    }
    else
    {
