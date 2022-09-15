@@ -97,6 +97,18 @@ Allows operations on the swarm server
 * ```reject(id)``` - Reject a review
 * ```setState(id, state)``` - Set a review to a custom state
 
+### ue5.groovy
+Handles all Unreal Engine 5 related operations
+
+**Functions**
+* ```build(ue5EngineRoot, ue5ProjectName, ue5Project, config, platform, outputDir, blueprintOnly = false, logFile = "${env.WORKSPACE}\\Logs\\UE5Build-${env.BUILD_NUMBER}.txt")``` - Build a (blueprintOnly) Unreal Engine 5 project
+* ```runAllTests(config = "Development", platform = "Win64")``` - Runs all tests defined in an Unreal Engine 5 project
+* ```runNamedTests(testNames, config = "Development", platform = "Win64")``` - Runs named tests defined in an Unreal Engine 5 project
+* ```runFilteredTests(testFilter, config = "Development", platform = "Win64")``` - Runs all tests in a filter. Valid filters are: Engine, Smoke, Stress, Perf & Product
+* ```runAutomationCommand(testCommand, config = "Development", platform = "Win64")``` - Runs an automation command from the Unreal Engine 5 command line
+* ```fixupRedirects(platform = "Win64")``` - Fixs up all redirects in an Unreal Engine 5 project
+
+
 ### ue4.groovy
 Handles all Unreal Engine 4 related operations
 
@@ -106,7 +118,7 @@ Handles all Unreal Engine 4 related operations
 * ```runNamedTests(testNames, config = "Development", platform = "Win64")``` - Runs named tests defined in an Unreal Engine 4 project
 * ```runFilteredTests(testFilter, config = "Development", platform = "Win64")``` - Runs all tests in a filter. Valid filters are: Engine, Smoke, Stress, Perf & Product
 * ```runAutomationCommand(testCommand, config = "Development", platform = "Win64")``` - Runs an automation command from the Unreal Engine 4 command line
-* ```fixupRedirects(platform = "Win64")``` - Fixs up all redirects in an Unreal Engien 4 project
+* ```fixupRedirects(platform = "Win64")``` - Fixs up all redirects in an Unreal Engine 4 project
 
 ### vs.groovy
 Uses MSBuild to compile Visual Studio projects
