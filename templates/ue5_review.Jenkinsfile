@@ -3,7 +3,7 @@ library identifier: 'JenkinsSharedLib@master',
     retriever: modernSCM([
       $class: 'GitSCMSource',
       credentialsId: '', // Public repo, no credentials needed
-      remote: 'https://github.com/jezzye13/JenkinsSharedLib'
+      remote: 'https://github.com/DavidtKate/JenkinsSharedLib'
     ])
 
 pipeline {
