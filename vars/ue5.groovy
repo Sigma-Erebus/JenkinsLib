@@ -68,7 +68,7 @@ def runFilteredTests(testFilter, config = "Development", platform = "Win64")
 def runAutomationCommand(testCommand, config = "Development", platform = "Win64")
 {
    log("Running tests in ${config} configuration on ${platform}")
-   def result = bat (label: "Run UE5 Automation Tests", script: "\"${ue5Info.engineRoot}Engine\\Binaries\\${platform}\\UnrealEditor-Cmd.exe\" \"${ue5Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportOutputPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\"", returnStatus: true)
+   def result = bat (label: "Run UE5 Automation Tests", script: "\"${ue5Info.engineRoot}Engine\\Binaries\\${platform}\\UnrealEditor-Cmd.exe\" \"${ue5Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportExportPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\"", returnStatus: true)
    
    if (result != 0)
    {
