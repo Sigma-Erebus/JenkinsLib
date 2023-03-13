@@ -175,7 +175,7 @@ Uploads packaged projects to Steam
 * ```deploy(appManifest, steamGuard = null)``` - Deploy to Steam (***Prefer using tryDeploy when trying to deploy to Steam!***)
 
 
-## Included Python Scripts
+## Included Python Scripts:
 Useful python scripts to be used with the python.groovy functions
 
 **Scripts:**
