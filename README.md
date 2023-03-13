@@ -103,7 +103,9 @@ Allows operations on the swarm server
 Handles all Unreal Engine 5 related operations
 
 **Functions**
-* ```build(ue5EngineRoot, ue5ProjectName, ue5Project, config, platform, outputDir, blueprintOnly = false, logFile = "${env.WORKSPACE}\\Logs\\UE5Build-${env.BUILD_NUMBER}.txt")``` - Build a (blueprintOnly) Unreal Engine 5 project
+* ```buildBlueprintProject(ue5EngineRoot, ue5ProjectName, ue5Project, config, platform, outputDir, logFile = "${env.WORKSPACE}\\Logs\\UE5Build-${env.BUILD_NUMBER}.txt")``` - Build an Unreal Engine 5 project
+* ```buildPrecompiledProject(ue5EngineRoot, ue5ProjectName, ue5Project, config, platform, outputDir, logFile = "${env.WORKSPACE}\\Logs\\UE5Build-${env.BUILD_NUMBER}.txt")``` - Build an Unreal Engine 5 project using a Precompiled Engine (not a compiled one)
+* ```build(ue5EngineRoot, ue5ProjectName, ue5Project, config, platform, outputDir, customFlags = "", logFile = "${env.WORKSPACE}\\Logs\\UE5Build-${env.BUILD_NUMBER}.txt")``` - Build an Unreal Engine 5 project with custom packaging arguments (has parametrized arguments included already)
 * ```runAllTests(config = "Development", platform = "Win64")``` - Runs all tests defined in an Unreal Engine 5 project
 * ```runNamedTests(testNames, config = "Development", platform = "Win64")``` - Runs named tests defined in an Unreal Engine 5 project
 * ```runFilteredTests(testFilter, config = "Development", platform = "Win64")``` - Runs all tests in a filter. Valid filters are: Engine, Smoke, Stress, Perf & Product
@@ -140,6 +142,7 @@ Handles communication between Jenkins and Discord
 * ```sendMessage(message, webhook)``` - Uses cURL to send a message to discord
 * ```succeeded(config, platform, webhook)``` - Sends build information to discord if the build succeeds
 * ```failed(config, platform, webhook)``` - Sends build information to discord if the build fails
+* ```unstable(config, platform, webhook)``` - Sends build information to discord if the build is unstable
 * ```newReview(id, author, swarmUrl, webhook, buildStatus = "not built", description = null)``` - Sends review information to discord when a new review is ready
 
 ### zip.groovy
@@ -149,11 +152,11 @@ Used to archive files into a zip folder using 7z
 * ```pack(source, archiveName, use7z = true)``` - Packs the content of the source folder to <archiveName>.zip (Uses 7z by default)
 * ```unpack(archiveName, destination, use7z = true)``` - Unpacks the content of a zip file to the destination folder (Uses 7z by default)
   
-### gdrive.groovy
-Sends files to Google Drive using cURL
+### python.groovy
+Executes python scripts with optional arguments
 
 **Functions:**
-* ```upload(source, fileName, clientID, clientSecret, refreshToken, parents)``` - Uploads files to a folder in Google Drive (Shared Drives are supported)
+* ```runScript(scriptPath, args)``` - runs a specified python script (some python scripts are already included)
 
 ### sentry.groovy
 Tool to diagnose, fix and optimize performance and debug crashes. More information: https://sentry.io/
@@ -170,3 +173,11 @@ Uploads packaged projects to Steam
 * ```createAppManifest(appID, depotID, contentRoot, description = "", isPreview = false, localContentPath = "", branch = "", outputDir= "output")``` - Creates app manifest
 * ```tryDeploy(appManifest)``` - Tries to deploy to Steam using SteamGuard
 * ```deploy(appManifest, steamGuard = null)``` - Deploy to Steam (***Prefer using tryDeploy when trying to deploy to Steam!***)
+
+
+### Included Python Scripts
+Useful python scripts to be used with the python.groovy functions
+
+**Scripts:**
+* ```GoogleDriveUpload.py AUTHFILE SOURCEFILE FILENAME GDPARENTID``` - Upload file to google drive through resumable upload (supports large files). Authfile = Service account authorization, Sourcefile = File to be uploaded, Filename = name when uploaded to google drive, GDParentID = google drive ID to upload to (supports shared drives)
+* ```MatchBuildID.py PROJECTDIR ENGINEDIR``` - Script to forcefully match BuildIDs of Engine and plugins. (***Only use if major engine version between plugins and engine is the same but BuildIDs for binaries don't match!***)
