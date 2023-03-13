@@ -1,7 +1,7 @@
 # JenkinsLib
 A Shared Library to reuse functions between Jenkins Pipeline scripts, specifically tailored to customized engines for multiple target platforms & (pre)compiled engines
 
-Credit to https://github.com/DavidtKate/JenkinsSharedLib for providing the foundation upon which this is built.
+Credit to https://github.com/DavidtKate/JenkinsSharedLib for providing part of the foundation upon which this is built.
 
 ## Groups system:
 The Swarm and Discord scripts read from a JSON file containing groups.
