@@ -152,6 +152,17 @@ def failed(config, platform, webhook)
                                  , webhook)
 }
 
+def unstable(config, platform, webhook)
+{
+   sendMessage(createMessage(":warning: UNSTABLE BUILD :warning:",
+                    "yellow",
+                    [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} is unstable", 
+                    value:"Last Changelist: ${env.P4_CHANGELIST}"],
+                    [name:"Job url", 
+                    value:"${env.BUILD_URL}"]],
+                    [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
+                , webhook)
+}
 def newReview(id, author, swarmUrl, webhook, buildStatus = "not built", description = null)
 {
    sendMessage(createMessage(":warning: NEW REVIEW :warning:",
