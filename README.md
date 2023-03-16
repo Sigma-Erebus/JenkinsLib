@@ -174,6 +174,11 @@ Uploads packaged projects to Steam
 * ```tryDeploy(appManifest)``` - Tries to deploy to Steam using SteamGuard
 * ```deploy(appManifest, steamGuard = null)``` - Deploy to Steam (***Prefer using tryDeploy when trying to deploy to Steam!***)
 
+### win.groovy
+Windows native functions such as file permission modifications
+
+**Functions:**
+* ```makeWritable(folderPath)``` - Removes Read-Only flag from all files in folder and subfolders
 
 ## Included Python Scripts:
 Useful python scripts to be used with the python.groovy functions
