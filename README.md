@@ -179,6 +179,8 @@ Windows native functions such as file permission modifications
 
 **Functions:**
 * ```makeWritable(folderPath)``` - Removes Read-Only flag from all files in folder and subfolders
+* ```copyPathFiles(sourcePath, targetPath)``` - Copies files from source to target
+* ```movePathFiles(sourcePath, targetPath)``` - Moves files from source to target
 
 ## Included Python Scripts:
 Useful python scripts to be used with the python.groovy functions
