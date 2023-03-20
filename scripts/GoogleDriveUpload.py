@@ -191,8 +191,9 @@ def send_data(uploadURL, MaxLength, Start, Size):
 def get_encoding():
     encoding = None
     if 'content-type' in headers:
-        content_type = headers['content-type'][0].lower()
-        match = re.search('charset=(\S+)', content_type)
+        content_type = str(next((value for key, value in headers.items() if key.lower() == 'content-type'), None))
+        regex = r'charset=(\S+)'
+        match = re.search(regex, content_type)
         if match:
             encoding = match.group(1)
             #print('Decoding using %s' % encoding)
