@@ -5,10 +5,18 @@ def makeWritable(folderPath)
 
 def copyPathFiles(sourcePath, targetPath)
 {
-    bat(label: "Copying files", script: "robocopy ${sourcePath} ${targetPath}")
+    try {
+        bat(label: "Copying files", script: "robocopy ${sourcePath} ${targetPath}")
+    } catch (err) {
+        echo "Caught: ${err}"
+    }
 }
 
 def movePathFiles(sourcePath, targetPath)
 {
-    bat(label: "Moving files", script: "robocopy ${sourcePath} ${targetPath} /mov")
+    try {
+        bat(label: "Copying files", script: "robocopy ${sourcePath} ${targetPath} /mov")
+    } catch (err) {
+        echo "Caught: ${err}"
+    }
 }
