@@ -9,6 +9,7 @@ def copyPathFiles(sourcePath, targetPath)
         bat(label: "Copying files", script: "robocopy ${sourcePath} ${targetPath}")
     } catch (err) {
         echo "Caught: ${err}"
+        echo "Exit Code 1 means success for robocopy"
     }
 }
 
@@ -18,5 +19,6 @@ def movePathFiles(sourcePath, targetPath)
         bat(label: "Copying files", script: "robocopy ${sourcePath} ${targetPath} /mov")
     } catch (err) {
         echo "Caught: ${err}"
+        echo "Exit Code 1 means success for robocopy"
     }
 }
