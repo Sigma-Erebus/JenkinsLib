@@ -1,9 +1,9 @@
 // Fetch Shared Library from Github
-library identifier: 'JenkinsSharedLib@master',
+library identifier: 'JenkinsLib@master',
     retriever: modernSCM([
       $class: 'GitSCMSource',
       credentialsId: '', // Public repo, no credentials needed
-      remote: 'https://github.com/DavidtKate/JenkinsSharedLib'
+      remote: 'https://github.com/Sigma-Erebus/JenkinsLib'
     ])
 
 pipeline {
