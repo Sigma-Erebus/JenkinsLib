@@ -1,9 +1,9 @@
 // Fetch Shared Library from Github
-library identifier: 'JenkinsSharedLib@master',
+library identifier: 'JenkinsLib@master',
     retriever: modernSCM([
       $class: 'GitSCMSource',
       credentialsId: '', // Public repo, no credentials needed
-      remote: 'https://github.com/DavidtKate/JenkinsSharedLib'
+      remote: 'https://github.com/Sigma-Erebus/JenkinsLib'
     ])
 
 pipeline {
@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     log.currStage()
-                    ue5.build(env.ENGINEROOT, env.PROJECTNAME, env.PROJECT, env.CONFIG, env.PLATFORM, env.OUTPUTDIR)
+                    ue5.buildBlueprintProject(env.ENGINEROOT, env.PROJECTNAME, env.PROJECT, env.CONFIG, env.PLATFORM, env.OUTPUTDIR)
                 }
             }
         }
