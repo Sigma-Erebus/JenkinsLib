@@ -187,4 +187,4 @@ Useful python scripts to be used with the python.groovy functions
 
 **Scripts:**
 * ```GoogleDriveUpload.py AUTHFILE SOURCEFILE FILENAME GDPARENTID MULTIPLIER``` - Upload file to google drive through resumable upload (supports large files). Authfile = Service account authorization, Sourcefile = File to be uploaded, Filename = name when uploaded to google drive, GDParentID = google drive ID to upload to (supports shared drives), Multiplier = Multiplier to packet size (bigger multiplier means more data is sent per packet, defaults to 8 if not set)
-* ```MatchBuildID.py PROJECTDIR ENGINEDIR``` - Script to forcefully match BuildIDs of Engine and plugins. (***Only use if major engine version between plugins and engine is the same but BuildIDs for binaries don't match!***)
+* ```MatchBuildID.py PROJECTDIR ENGINEDIR INCLUDEPROJECTMODULES``` - Script to forcefully match BuildIDs of Engine and plugins/project. (***Only use if major engine version between plugins and engine is the same but BuildIDs for binaries don't match!***)
