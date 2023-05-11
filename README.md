@@ -149,7 +149,7 @@ Handles communication between Jenkins and Discord
 Used to archive files into a zip folder using 7z
 
 **Functions:**
-* ```pack(source, archiveName, use7z = true)``` - Packs the content of the source folder to <archiveName>.zip (Uses 7z by default)
+* ```pack(source, archiveName, use7z = true)``` - Packs the content of the source folder to [archiveName].zip (Uses 7z by default)
 * ```unpack(archiveName, destination, use7z = true)``` - Unpacks the content of a zip file to the destination folder (Uses 7z by default)
   
 ### python.groovy
@@ -173,6 +173,12 @@ Uploads packaged projects to Steam
 * ```createAppManifest(appID, depotID, contentRoot, description = "", isPreview = false, localContentPath = "", branch = "", outputDir= "output")``` - Creates app manifest
 * ```tryDeploy(appManifest)``` - Tries to deploy to Steam using SteamGuard
 * ```deploy(appManifest, steamGuard = null)``` - Deploy to Steam (***Prefer using tryDeploy when trying to deploy to Steam!***)
+	
+### itch.groovy
+Uploads packaged projects to itch.io
+
+**Functions:**
+* ```upload(butlerExe, authFile, source, target)``` - Uploads to itch.io using APIkey file
 
 ### win.groovy
 Windows native functions such as file permission modifications
