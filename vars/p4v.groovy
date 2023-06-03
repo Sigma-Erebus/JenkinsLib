@@ -67,5 +67,5 @@ def getCurrChangelistDescr()
 def publish(p4credential, p4host, p4workspace, p4viewMapping)
 {
    p4Info = [credential: p4credential, host: p4host, workspace: p4workspace, viewMapping: p4viewMapping]
-   p4publish credential: p4Info.credential, publish: submit(delete: false, description: 'Submitted by Jenkins. Build: ${BUILD_TAG}', modtime: false, onlyOnSuccess: true), workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping))
+   p4publish credential: p4Info.credential, publish: submit(delete: false, description: 'Submitted by Jenkins. Build: ${BUILD_TAG}', onlyOnSuccess: true, revert: false), workspace: staticSpec(charset: 'none', name: p4Info.workspace, pinHost: false)
 }
