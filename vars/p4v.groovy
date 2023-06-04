@@ -67,5 +67,5 @@ def getCurrChangelistDescr()
 def publish(p4credential, p4host, p4workspace, p4viewMapping)
 {
    p4Info = [credential: p4credential, host: p4host, workspace: p4workspace, viewMapping: p4viewMapping]
-   p4publish(credential: p4Info.credential, publish: submit(delete: false, description: 'Submitted by Jenkins. Build: ${BUILD_TAG}', onlyOnSuccess: true), workspace: staticSpec(charset: 'none', name: p4Info.workspace, pinHost: false))
+   p4publish credential: p4Info.credential, publish: submit(delete: false, description: 'Submitted by Jenkins. Build: ${BUILD_TAG}', onlyOnSuccess: true), workspace: staticSpec(charset: 'none', name: p4Info.workspace, pinHost: false)
 }
