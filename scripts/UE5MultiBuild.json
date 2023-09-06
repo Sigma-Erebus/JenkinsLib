@@ -1,0 +1,183 @@
+{
+	"Groups": [
+		{
+			"Name": "Windows Build",
+			"Agent Types": [
+				"Win64"
+			],
+			"Nodes": [
+				{
+					"Name": "Compile UnrealEditor Win64 for BuildGraphTest",
+					"DependsOn": "",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Compile BuildGraphTest UnrealGame Win64 Development",
+					"DependsOn": "",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Compile UnrealEditor Win64 for BuildGraphTest2",
+					"DependsOn": "",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Compile BuildGraphTest2 UnrealGame Win64 Development",
+					"DependsOn": "",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Compile UnrealEditor Win64 for BuildGraphTest3",
+					"DependsOn": "",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Compile BuildGraphTest3 UnrealGame Win64 Development",
+					"DependsOn": "",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				}
+			]
+		},
+		{
+			"Name": "Windows Cook",
+			"Agent Types": [
+				"Win64"
+			],
+			"Nodes": [
+				{
+					"Name": "Cook Game BuildGraphTest Win64",
+					"DependsOn": "Compile UnrealEditor Win64 for BuildGraphTest",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Cook Game BuildGraphTest2 Win64",
+					"DependsOn": "Compile UnrealEditor Win64 for BuildGraphTest2",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Cook Game BuildGraphTest3 Win64",
+					"DependsOn": "Compile UnrealEditor Win64 for BuildGraphTest3",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				}
+			]
+		},
+		{
+			"Name": "Windows Stage and Package",
+			"Agent Types": [
+				"Win64"
+			],
+			"Nodes": [
+				{
+					"Name": "Stage and Package BuildGraphTest UnrealGame Win64 Development",
+					"DependsOn": "Compile BuildGraphTest UnrealGame Win64 Development;Cook Game BuildGraphTest Win64",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Stage and Package BuildGraphTest2 UnrealGame Win64 Development",
+					"DependsOn": "Compile BuildGraphTest2 UnrealGame Win64 Development;Cook Game BuildGraphTest2 Win64",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				},
+				{
+					"Name": "Stage and Package BuildGraphTest3 UnrealGame Win64 Development",
+					"DependsOn": "Compile BuildGraphTest3 UnrealGame Win64 Development;Cook Game BuildGraphTest3 Win64",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				}
+			]
+		},
+		{
+			"Name": "Windows Tag",
+			"Agent Types": [
+				"Win64"
+			],
+			"Nodes": [
+				{
+					"Name": "Complete",
+					"DependsOn": "Stage and Package BuildGraphTest UnrealGame Win64 Development;Stage and Package BuildGraphTest2 UnrealGame Win64 Development;Stage and Package BuildGraphTest3 UnrealGame Win64 Development",
+					"RunEarly": false,
+					"Notify": 
+					{
+						"Default": "",
+						"Submitters": "",
+						"Warnings": true
+					}
+				}
+			]
+		}
+	],
+	"Badges": [
+	],
+	"Reports": [
+	]
+}

@@ -1,0 +1,2 @@
+CALL J:\5.2.1_Source\Engine\Build\BatchFiles\RunUAT.bat BuildGraph -SingleNode="Compile UnrealEditor Win64 for BuildGraphTest2" -script=J:\GitHub\JenkinsLib\scripts\UE5Build.xml -set:EnginePath=J:\5.2.1_Source\Engine -set:TempPath=J:\temp -set:ProjectsFolder=J:\UnrealProjects -set:Projects=BuildGraphTest;BuildGraphTest2 -set:ExecuteBuild=true -set:EditorTarget=UnrealEditor -set:GameTargetPlatforms=Win64 -set:GameConfigurations=Development -set:StageDirectory=Saved\StagedBuilds -set:ExecuteTests=false
+pause
