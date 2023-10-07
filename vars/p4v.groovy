@@ -1,7 +1,7 @@
 def p4Info = null
 
 // Must be called first before calling other functions
-def init(p4credential, p4host, p4workspace, p4viewMapping, cleanForce = true)
+def init(p4credential, p4host, p4workspace, p4viewMapping, cleanForce = false)
 {
    p4Info = [credential: p4credential, host: p4host, workspace: p4workspace, viewMapping: p4viewMapping]
    if (cleanForce)
