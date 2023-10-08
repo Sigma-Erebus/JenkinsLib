@@ -4,7 +4,6 @@ def steamInfo = null
 def init(steamCredential, steamCmdPath)
 {
    steamInfo = [credential: steamCredential, steamCmd: steamCmdPath]
-   log("Steam environment variables have been initialized")
 }
 
 def createDepotManifest(depotID, contentRoot, localPath = "*", depotPath = ".", isRecursive = true, exclude = "*.pdb")
