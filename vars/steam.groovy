@@ -78,7 +78,7 @@ def deploy(appManifest, steamGuard = null)
    withCredentials([usernamePassword(credentialsId: steamInfo.credential, passwordVariable: 'STEAMPASS', usernameVariable: 'STEAMUSER')]) {
         if (steamGuard)
         {
-           bat (lable: "SteamGuardCode", script: "echo \"${steamGuard}\"")
+           bat (label: "SteamGuardCode", script: "echo \"${steamGuard}\"")
            bat (label: "Deploy to Steam with SteamGuard", script: "\"${steamInfo.steamCmd}\" +login %STEAMUSER% %STEAMPASS% \"${steamGuard}\"  +run_app_build_http \"${appManifest}\" +quit")
         } 
         else 
