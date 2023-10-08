@@ -4,7 +4,6 @@ def steamInfo = null
 def init(steamCredential, steamCmdPath)
 {
    steamInfo = [credential: steamCredential, steamCmd: steamCmdPath]
-   log("\"${steamInfo.steamCmd}\"1")
 }
 
 def createDepotManifest(depotID, contentRoot, localPath = "*", depotPath = ".", isRecursive = true, exclude = "*.pdb")
@@ -79,13 +78,11 @@ def deploy(appManifest, steamGuard = null)
    withCredentials([usernamePassword(credentialsId: steamInfo.credential, passwordVariable: 'STEAMPASS', usernameVariable: 'STEAMUSER')]) {
         if (steamGuard)
         {
-           log("\"${steamInfo.steamCmd}\"3")
-           bat(label: "Deploy to Steam with SteamGuard", script: "\"${steamInfo.steamCmd}\" +login %STEAMUSER% %STEAMPASS% \"${steamGuard}\"  +run_app_build_http \"${appManifest}\" +quit")
+           bat (label: "Deploy to Steam with SteamGuard", script: "\"${steamInfo.steamCmd}\" +login %STEAMUSER% %STEAMPASS% \"${steamGuard}\"  +run_app_build_http \"${appManifest}\" +quit")
         } 
         else 
         {
-           log("\"${steamInfo.steamCmd}\"2")
-           bat(label: "Deploy to Steam without SteamGuard", script: "\"${steamInfo.steamCmd}\" +login %STEAMUSER% %STEAMPASS% +run_app_build_http \"${appManifest}\" +quit")
+           bat (label: "Deploy to Steam without SteamGuard", script: "\"${steamInfo.steamCmd}\" +login %STEAMUSER% %STEAMPASS% +run_app_build_http \"${appManifest}\" +quit")
         }
     }
 }
