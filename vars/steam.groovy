@@ -61,8 +61,6 @@ def tryDeploy(appManifest)
 
       if (guardCode)
       {
-         bat (label: "SteamGuardCode", script: "echo \"${steamGuard}\"")
-         log("point 1 REACHED")
          deploy(appManifest, guardCode)
       }
       else
@@ -80,8 +78,6 @@ def deploy(appManifest, steamGuard = null)
    withCredentials([usernamePassword(credentialsId: steamInfo.credential, passwordVariable: 'STEAMPASS', usernameVariable: 'STEAMUSER')]) {
         if (steamGuard)
         {
-           bat (label: "SteamGuardCode", script: "echo \"${steamGuard}\"")
-           log("point 2 REACHED")
            bat (label: "Deploy to Steam with SteamGuard", script: "\"${steamInfo.steamCmd}\" +login %STEAMUSER% %STEAMPASS% \"${steamGuard}\"  +run_app_build_http \"${appManifest}\" +quit")
         } 
         else 
