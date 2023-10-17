@@ -14,14 +14,6 @@ def init(p4credential, p4host, p4workspace, p4viewMapping, cleanForce = false)
    }
 }
 
-def getWorkspaceVersion()
-{
-   def (depotView, clientView) = p4Info.viewMapping.tokenize( '/... ' )
-   depotView = depotView + '/...'
-   current = p4 changes -m1 p4Info.viewMapping#have
-   return current
-}
-
 def clean()
 {
    def p4s = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping)))
