@@ -166,7 +166,7 @@ def unstable(config, platform, webhook)
 def aborted(config, platform, webhook)
 {
 	sendMessage(createMessage(":stop_sign: BUILD ABORTED :stop_sign:",
-                    "white",
+                    "red",
                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has been aborted", 
                     value:"Last Changelist: ${env.P4_CHANGELIST}"],
                     [name:"Job url", 
