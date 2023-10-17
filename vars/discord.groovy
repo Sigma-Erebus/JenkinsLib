@@ -163,6 +163,17 @@ def unstable(config, platform, webhook)
                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
                 , webhook)
 }
+def aborted(config, platform, webhook)
+{
+	sendMessage(createMessage(":stop_sign: BUILD ABORTED :stop_sign:",
+                    "white",
+                    [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has been aborted", 
+                    value:"Last Changelist: ${env.P4_CHANGELIST}"],
+                    [name:"Job url", 
+                    value:"${env.BUILD_URL}"]],
+                    [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
+                , webhook)
+}
 def newReview(id, author, swarmUrl, webhook, buildStatus = "not built", description = null)
 {
    sendMessage(createMessage(":warning: NEW REVIEW :warning:",
