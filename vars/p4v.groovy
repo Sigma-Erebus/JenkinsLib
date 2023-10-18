@@ -26,7 +26,7 @@ def initGetLatestCL(p4credential, p4host)
    //   }
    //}
    def change = ""
-   return changes.get('changes')
+   return changes.get('change')
 }
 
 def clean()
