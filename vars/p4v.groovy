@@ -21,7 +21,7 @@ def initGetLatestCL(p4credential, p4host)
    def changes = p4s.run('changes', '-s', 'submitted', '-m1')
    for(def item : changes) {
       for (String key : item.keySet()) {
-         value = item.ket(key)
+         value = item.get(key)
          println ("Key: " + key + " Value: " + value)
       }
    }
