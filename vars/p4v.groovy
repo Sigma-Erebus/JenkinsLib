@@ -14,6 +14,16 @@ def init(p4credential, p4host, p4workspace, p4viewMapping, version = '', cleanFo
    }
 }
 
+def initGetLatestCL(p4credential, p4host, p4workspace, p4viewMapping)
+{
+   def change = ""
+   p4Info = [credential: p4credential, host: p4host, workspace: p4workspace, viewMapping: p4viewMapping]
+   def p4s = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: 'Jenkins-${NODE_NAME}', pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: true, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: '')))
+   def change = p4s.run('changes', '-s', 'submitted', '-m1')
+   def changes = change.findAll( /\d+/ ).toInteger()
+   return changes[0]
+}
+
 def clean()
 {
    def p4s = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: p4Info.workspace, pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: false, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: p4Info.viewMapping)))
