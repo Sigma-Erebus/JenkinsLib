@@ -20,7 +20,7 @@ def initGetLatestCL(p4credential, p4host)
    def p4s = p4(credential: p4Info.credential, workspace: manualSpec(charset: 'none', cleanup: false, name: 'Jenkins-${NODE_NAME}', pinHost: false, spec: clientSpec(allwrite: true, backup: true, changeView: '', clobber: true, compress: false, line: 'LOCAL', locked: false, modtime: false, rmdir: false, serverID: '', streamName: '', type: 'WRITABLE', view: '')))
    String change = p4s.run('changes', '-s', 'submitted', '-m1')
    def changeString = change.tokenize()
-   return changeString[1]
+   return change
 }
 
 def clean()
