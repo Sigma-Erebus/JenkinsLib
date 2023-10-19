@@ -132,7 +132,7 @@ def succeeded(config, platform, webhook)
 {
    sendMessage(createMessage(":white_check_mark: BUILD SUCCEEDED :white_check_mark:",
                                      "green",
-                                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has succeeded", 
+                                     [[name:"${config}${platform} ${env.JOB_BASE_NAME} has succeeded", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
                                      [name:"Job url", 
                                      value:"${env.BUILD_URL}"]],
@@ -144,7 +144,7 @@ def failed(config, platform, webhook)
 {
    sendMessage(createMessage(":x: BUILD FAILED :x:",
                                      "red",
-                                     [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has failed", 
+                                     [[name:"${config}${platform} ${env.JOB_BASE_NAME} has failed", 
                                      value:"Last Changelist: ${env.P4_CHANGELIST}"],
                                      [name:"Job url", 
                                      value:"${env.BUILD_URL}"]],
@@ -156,7 +156,7 @@ def unstable(config, platform, webhook)
 {
    sendMessage(createMessage(":warning: UNSTABLE BUILD :warning:",
                     "yellow",
-                    [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} is unstable", 
+                    [[name:"${config}${platform} ${env.JOB_BASE_NAME} is unstable", 
                     value:"Last Changelist: ${env.P4_CHANGELIST}"],
                     [name:"Job url", 
                     value:"${env.BUILD_URL}"]],
@@ -167,7 +167,7 @@ def aborted(config, platform, webhook)
 {
 	sendMessage(createMessage(":stop_sign: BUILD ABORTED :stop_sign:",
                     "red",
-                    [[name:"${config}(${platform}) ${env.JOB_BASE_NAME} has been aborted", 
+                    [[name:"${config}${platform} ${env.JOB_BASE_NAME} has been aborted", 
                     value:"Last Changelist: ${env.P4_CHANGELIST}"],
                     [name:"Job url", 
                     value:"${env.BUILD_URL}"]],
