@@ -152,6 +152,18 @@ def failed(config, platform, webhook)
                                  , webhook)
 }
 
+def partfailed(config, platform, webhook)
+{
+   sendMessage(createMessage(":o: BUILD FAILED PARTIALLY :o:",
+                                     "red",
+                                     [[name:"${config}${platform} ${env.JOB_BASE_NAME} has partially failed", 
+                                     value:"Last Changelist: ${env.P4_CHANGELIST}"],
+                                     [name:"Job url", 
+                                     value:"${env.BUILD_URL}"]],
+                                     [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
+                                 , webhook)
+}
+
 def unstable(config, platform, webhook)
 {
    sendMessage(createMessage(":warning: UNSTABLE BUILD :warning:",
