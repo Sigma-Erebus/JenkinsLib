@@ -56,7 +56,7 @@ pipeline {
                     log.currStage()
                     //p4v.init(env.P4USER, env.P4HOST, env.P4WORKSPACE, env.P4MAPPING, '138398', !env.CLEANWORKSPACE)
 		    p4v.pureinit(P4USER, P4HOST, P4WORKSPACE, P4MAPPING)
-                    p4v.puresync(newestChangelist, false)
+                    p4v.puresync(newestChangeList, false)
                     log("P4 synced to: ${env.P4_CHANGELIST}")
                 }
             }
