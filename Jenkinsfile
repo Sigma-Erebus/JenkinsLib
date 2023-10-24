@@ -18,40 +18,31 @@ pipeline {
     }
     environment {                                                               // Note for Credentials: Credentials are stored per folder, and are available to pipelines in that folder and it's subfolders. Please keep Credentials as local to the pipeline as possible. (e.g. only your team needs it, place it in your team folder, entirety of your year needs it, place it in your year folder.)
         // Perforce
-        P4USER = "ce8c344f-646e-45da-ab58-32b0cb723d0f"                         // Credentials ID to a perforce user credential (that has access to the depot of the project)
+        //P4USER = "ce8c344f-646e-45da-ab58-32b0cb723d0f"                         // Credentials ID to a perforce user credential (that has access to the depot of the project)
         P4HOST = "ssl:perforce.buas.nl:1666"                                    // Perforce Server - No need to change
-        P4WORKSPACE = "Hidde200170_JenkinsTest"                                 // Name of the Workspace it should use (best to make and assign a workspace for use just by Jenkins)
-        P4MAPPING = "//Hidde200170/... //Hidde200170_JenkinsTest/Hidde200170/..."// Mapping view of the workspace (Please exclusively map the folder containing the .uproject file, since anything beyond that is unnecessary download time)
+        //P4WORKSPACE = "Hidde200170_JenkinsTest"                                 // Name of the Workspace it should use (best to make and assign a workspace for use just by Jenkins)
+        //P4MAPPING = "//Hidde200170/... //Hidde200170_JenkinsTest/Hidde200170/..."// Mapping view of the workspace (Please exclusively map the folder containing the .uproject file, since anything beyond that is unnecessary download time)
         
         // Unreal Engine 5
-        ENGINEROOT = "${env.UE53DIR}"                                           // Root of the engine - Check Teams Channel for available versions and their respective paths
-	UECURDIR = ""    //Define used Unreal dir
-        	switch(ENGINEVERSION) {
-                case "5.3":
-                        UECURDIR = env.UE53DIR
-                default:
-                        log("Unreal Version not specified or not found, defaulting to 5.3")
-                        UECURDIR = env.UE53DIR
-                }
-        PROJECT = "${env.WORKSPACE}\\Hidde200170\\JnknsTst\\JnknsTst.uproject"  // Path to .uproject file relative to the workspace
-        PROJECTDIR = "${env.WORKSPACE}/Hidde200170/JnknsTst/"                   // Path to the folder containing the .uproject file relative to the workspace
-        PROJECTNAME = "JnknsTst"                                                // Name of the project
+        //PROJECT = "${env.WORKSPACE}\\Hidde200170\\JnknsTst\\JnknsTst.uproject"  // Path to .uproject file relative to the workspace
+        //PROJECTDIR = "${env.WORKSPACE}/Hidde200170/JnknsTst/"                   // Path to the folder containing the .uproject file relative to the workspace
+        //PROJECTNAME = "JnknsTst"                                                // Name of the project
         OUTPUTDIR = "${env.WORKSPACE}\\Output"                                  // Output directory - Don't change
         
         // Discord
-        WEBHOOK_BUILD = "https://discord.com/api/webhooks/1061783301481832448/JEWoUs7z_W0aJrvXzCD8gtw66yjW8QQDKP7X7D_PaMsuBe-1Xs03KjfXZjnATR1P-NSd"     // Discord Webhook URL so that update messages can be sent to your discord server
+        //WEBHOOK_BUILD = "https://discord.com/api/webhooks/1061783301481832448/JEWoUs7z_W0aJrvXzCD8gtw66yjW8QQDKP7X7D_PaMsuBe-1Xs03KjfXZjnATR1P-NSd"     // Discord Webhook URL so that update messages can be sent to your discord server
         
         // Steam
-        STEAMUSR = "4dcb6cd0-69ea-4f18-8f00-c8333db90524"                       // Credentials ID to a steam user/password credential (that has permission to upload the game to steam)
+        //STEAMUSR = "4dcb6cd0-69ea-4f18-8f00-c8333db90524"                       // Credentials ID to a steam user/password credential (that has permission to upload the game to steam)
         
         // Google Drive
         GDAUTH = "a877727d-88c3-4ae3-b7fb-c374c64cf3a6"                         // Credentials ID for Jenkins' GDrive Daemon - Don't Change
-        GOOGLEDRIVEID = "1uiXReW78bGFpXryfyqmuDfoXoUDDKuX_"                     // ID of your team's shared google drive folder where you want the Daemon to upload to (ID is the last part of the URL, and make sure that daemon@jenkins-buas.iam.gserviceaccount.com has permission to add files to said folder)
-        UPLOADSIZEMULTIPLIER = "16"                                             // Multiplier to packet size when uploading - No need to change - though might increase/decrease the speed of GDrive uploads
+        //GOOGLEDRIVEID = "1uiXReW78bGFpXryfyqmuDfoXoUDDKuX_"                     // ID of your team's shared google drive folder where you want the Daemon to upload to (ID is the last part of the URL, and make sure that daemon@jenkins-buas.iam.gserviceaccount.com has permission to add files to said folder)
+        //UPLOADSIZEMULTIPLIER = "16"                                             // Multiplier to packet size when uploading - No need to change - though might increase/decrease the speed of GDrive uploads
         
         // Itch.io
-        BUTLER_API_KEY = "ziib04jySa6Vb5n9BgzMbIZ8oAaRylKYoK1lGqDn"             // API key for butler to identify if the application has authority to upload to a certain project (uses Environment Variable directly, so cannot use credentials...)
-        BUTLERTARGET = "sigma-erebus/testproject:win"                           // user and project to target when uploading
+        //BUTLER_API_KEY = "ziib04jySa6Vb5n9BgzMbIZ8oAaRylKYoK1lGqDn"             // API key for butler to identify if the application has authority to upload to a certain project (uses Environment Variable directly, so cannot use credentials...)
+        //BUTLERTARGET = "sigma-erebus/testproject:win"                           // user and project to target when uploading
         
         // General
         CLEANWORKSPACE = true                                                   // Clean workspace - Don't change
@@ -72,12 +63,21 @@ pipeline {
             steps {
                 script {
                     log.currStage()
+		    String UECURDIR = ""    //Define used Unreal dir
+        		switch(ENGINEVERSION) {
+                	case "5.3":
+                            UECURDIR = env.UE53DIR
+                	default:
+                            log("Unreal Version not specified or not found, defaulting to 5.3")
+                            UECURDIR = env.UE53DIR
+                    }
+		    UECURDIR = UECURDIR - "\\Engine"
                     win.makeWritable(env.PROJECTDIR)
-                    python.runScript("C:\\Users\\Administrator\\Desktop\\Scripts\\MatchBuildID.py", "${env.PROJECTDIR}\" \"${env.ENGINEROOT}\\\" \"false")
+                    python.runScript("C:\\Users\\Administrator\\Desktop\\Scripts\\MatchBuildID.py", "${env.PROJECTDIR}\" \"${UECURDIR}\\\" \"false")
                     if(env.PLATFORM == "PS5") {
-					    win.movePathFiles("\"${PROJECTDIR}Content\\Images\"", "\"${ENGINEROOT}Engine\\Platforms\\PS5\\Build\\sce_sys\"")
+					    win.movePathFiles("\"${PROJECTDIR}Content\\Images\"", "\"${UECURDIR}Engine\\Platforms\\PS5\\Build\\sce_sys\"")
 					}
-                    ue5.buildPrecompiledProject(env.ENGINEROOT, env.PROJECTNAME, env.PROJECT, env.CONFIG, env.PLATFORM, env.OUTPUTDIR)
+                    ue5.buildPrecompiledProject(UECURDIR, env.PROJECTNAME, env.PROJECT, env.CONFIG, env.PLATFORM, env.OUTPUTDIR)
                 }
             }
         }
