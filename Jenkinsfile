@@ -25,6 +25,14 @@ pipeline {
         
         // Unreal Engine 5
         ENGINEROOT = "${env.UE53DIR}"                                           // Root of the engine - Check Teams Channel for available versions and their respective paths
+	UECURDIR = ""    //Define used Unreal dir
+        	switch(ENGINEVERSION) {
+                case "5.3":
+                        UECURDIR = env.UE53DIR
+                default:
+                        log("Unreal Version not specified or not found, defaulting to 5.3")
+                        UECURDIR = env.UE53DIR
+                }
         PROJECT = "${env.WORKSPACE}\\Hidde200170\\JnknsTst\\JnknsTst.uproject"  // Path to .uproject file relative to the workspace
         PROJECTDIR = "${env.WORKSPACE}/Hidde200170/JnknsTst/"                   // Path to the folder containing the .uproject file relative to the workspace
         PROJECTNAME = "JnknsTst"                                                // Name of the project
