@@ -21,7 +21,7 @@ pipeline {
         P4USER = "ce8c344f-646e-45da-ab58-32b0cb723d0f"                         // Credentials ID to a perforce user credential (that has access to the depot of the project)
         P4HOST = "ssl:perforce.buas.nl:1666"                                    // Perforce Server - No need to change
         P4WORKSPACE = "Hidde200170_JenkinsTest"                                 // Name of the Workspace it should use (best to make and assign a workspace for use just by Jenkins)
-        P4MAPPING = "//Hidde200170/... //Hidde200170_Jenkins/Hidde200170/..."   // Mapping view of the workspace (Please exclusively map the folder containing the .uproject file, since anything beyond that is unnecessary download time)
+        P4MAPPING = "//Hidde200170/... //Hidde200170_JenkinsTest/Hidde200170/..."// Mapping view of the workspace (Please exclusively map the folder containing the .uproject file, since anything beyond that is unnecessary download time)
         
         // Unreal Engine 5
         ENGINEROOT = "${env.UE53DIR}"                                           // Root of the engine - Check Teams Channel for available versions and their respective paths
