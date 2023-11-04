@@ -1,6 +1,6 @@
 def doesUploadTargetExist(ProjectConfig, UploadManifest) {
     def gameTargets = ProjectConfig.GameTargets.split(';')
-    def gameTargets = ProjectConfig.ClientTargets.split(';')
+    def clientTargets = ProjectConfig.ClientTargets.split(';')
     def serverTargets = ProjectConfig.ServerTargets.split(';')
     def gamePlatforms = ProjectConfig.GamePlatforms.split(';')
     def clientPlatforms = ProjectConfig.ClientPlatforms.split(';')
