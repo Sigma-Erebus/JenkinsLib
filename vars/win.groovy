@@ -3,7 +3,7 @@ def makeWritable(folderPath)
    bat(label: "Removing Read-Only flags", script: "attrib -r ${folderPath}*.* /s")
 }
 
-def copyPathFiles(sourcePath, targetPath, fileFilter)
+def copyPathFiles(sourcePath, targetPath, fileFilter = "/e")
 {
     try {
         bat(label: "Copying files", script: "robocopy ${sourcePath} ${targetPath} ${fileFilter}")
@@ -13,7 +13,7 @@ def copyPathFiles(sourcePath, targetPath, fileFilter)
     }
 }
 
-def movePathFiles(sourcePath, targetPath, fileFilter)
+def movePathFiles(sourcePath, targetPath, fileFilter = "/e")
 {
     try {
         bat(label: "Copying files", script: "robocopy ${sourcePath} ${targetPath} ${fileFilter} /mov")
