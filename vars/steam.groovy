@@ -82,7 +82,7 @@ def deploy(appManifest, steamGuard = null)
         } 
         else 
         {
-           bat (label: "Deploy to Steam without SteamGuard", script: "\"${steamInfo.steamCmd}\" +login %STEAMUSER% %STEAMPASS% +run_app_build_http \"${appManifest}\" +quit")
+           bat (label: "Deploy to Steam without SteamGuard", script: "\"${steamInfo.steamCmd}\" +login %STEAMUSER% +run_app_build_http \"${appManifest}\" +quit")
         }
     }
 }
