@@ -225,3 +225,64 @@ def reportTestResults(json, webhook)
                                      [text:"${env.JOB_BASE_NAME} (${env.BUILD_NUMBER})"])
                                  , webhook)
 }
+
+def reportMultiBuildResults(perProjectStatus, multiBuildConfigFile)
+{
+   def jsonSlurper = new JsonSlurper()
+   def MultiBuildConfig = jsonSlurper.parseText(multiBuildConfigFile)
+   def perProjectFinalStatus = []
+   def localPerProjectStatus = perProjectStatus
+   localPerProjectStatus.each { key, val ->
+      for (int i = 0; i < MultiBuildConfig.Projects.size(); i++) {
+         if(key.contains(MultiBuildConfig.Projects[i].Name)) {
+            perProjectFinalStatus.add("${MultiBuildConfig.Projects[i].Name}=${val}")
+         }
+      }
+   }
+   for (int i = 0; i < MultiBuildConfig.Projects.size(); i++) {                              //Define final result of build based on individual stage results
+      if(!perProjectFinalStatus.contains("${MultiBuildConfig.Projects[i].Name}=FAILURE")) {
+         localPerProjectStatus["${MultiBuildConfig.Projects[i].Name}"] = "SUCCESS"
+      }
+      if(perProjectFinalStatus.contains("${MultiBuildConfig.Projects[i].Name}=ABORTED")) {
+         localPerProjectStatus["${MultiBuildConfig.Projects[i].Name}"] = "ABORTED"
+      }
+      if(perProjectFinalStatus.contains("${MultiBuildConfig.Projects[i].Name}=UNSTABLE")) {
+         localPerProjectStatus["${MultiBuildConfig.Projects[i].Name}"] = "UNSTABLE"
+      }
+      if(perProjectFinalStatus.contains("${MultiBuildConfig.Projects[i].Name}=FAILURE")) {
+         localPerProjectStatus["${MultiBuildConfig.Projects[i].Name}"] = "PARTIALFAILURE"
+      }
+      if(!perProjectFinalStatus.contains("${MultiBuildConfig.Projects[i].Name}=SUCCESS")) {
+         localPerProjectStatus["${MultiBuildConfig.Projects[i].Name}"] = "FAILURE"
+      }
+   }
+   for (int i = 0; i < MultiBuildConfig.Projects.size(); i++) {                  //Send Discord messages
+      def status = localPerProjectStatus["${MultiBuildConfig.Projects[i].Name}"]
+      def config = """\
+      GameConfigurations: ${MultiBuildConfig.Projects[i].GameConfigurations}
+      ClientConfigurations: ${MultiBuildConfig.Projects[i].ClientConfigurations}
+      ServerConfigurations: ${MultiBuildConfig.Projects[i].ServerConfigurations}
+      """.stripIndent()
+      def platforms = """\
+
+      GamePlatforms: ${MultiBuildConfig.Projects[i].GamePlatforms}
+      ClientPlatforms: ${MultiBuildConfig.Projects[i].ClientPlatforms}
+      ServerPlatforms: ${MultiBuildConfig.Projects[i].ServerPlatforms}
+      """.stripIndent()
+      if(status == "FAILURE") {
+         failed(config, platforms, MultiBuildConfig.Projects[i].DiscordWebhookURL)
+      }
+      if(status == "PARTIALFAILURE") {
+         partfailed(config, platforms, MultiBuildConfig.Projects[i].DiscordWebhookURL)
+      }
+      if(status == "UNSTABLE") {
+         unstable(config, platforms, MultiBuildConfig.Projects[i].DiscordWebhookURL)
+      }
+      if(status == "SUCCESS") {
+         succeeded(config, platforms, MultiBuildConfig.Projects[i].DiscordWebhookURL)
+      }
+      if(status == "ABORTED") {
+         aborted(config, platforms, MultiBuildConfig.Projects[i].DiscordWebhookURL)
+      }
+   }
+}
