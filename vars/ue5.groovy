@@ -19,7 +19,7 @@ def buildBlueprintProject(engineRoot, projectName, project, config, platform, ou
    init(engineRoot, projectName, project)
    
    // Only package since we have a blueprintOnly project
-   bat(label: "Package UE5 project", script: "\"${ue5Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue5Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package")
+   bat(label: "Package UE5 project", script: "\"${ue5Info.engineRoot}\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue5Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package")
    
 }
 
@@ -28,7 +28,7 @@ def buildPrecompiledProject(engineRoot, projectName, project, config, platform, 
    init(engineRoot, projectName, project)
    
    // Package
-   bat(label: "Package UE5 project", script: "\"${env.ENGINEROOT}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${env.PROJECT}\" -NoP4 -nocompileeditor -skipbuildeditor -TargetPlatform=${env.PLATFORM} -Platform=${env.PLATFORM} -ClientConfig=${env.CONFIG} -Cook -Build -Stage -Pak -Archive -Archivedirectory=\"${env.OUTPUTDIR}\" -Rocket -Prereqs -iostore -compressed -Package -nocompile -nocompileuat")
+   bat(label: "Package UE5 project", script: "\"${ue5Info.engineRoot}\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue5Info.project}\" -NoP4 -nocompileeditor -skipbuildeditor -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -Cook -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -iostore -compressed -Package -nocompile -nocompileuat")
 }
 
 def buildCustomProject(engineRoot, projectName, project, config, platform, outputDir, customFlags = "-Cook -Allmaps -Build -Stage -Pak -Rocket -Prereqs -Package -crashreporter", logFile = "${env.WORKSPACE}\\Logs\\UE5Build-${env.BUILD_NUMBER}.txt")
@@ -36,7 +36,7 @@ def buildCustomProject(engineRoot, projectName, project, config, platform, outpu
    init(engineRoot, projectName, project)
    
    // Package
-   bat(label: "Package UE5 project", script: "\"${ue5Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue5Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Archive -Archivedirectory=\"${outputDir}\" ${customFlags}")
+   bat(label: "Package UE5 project", script: "\"${ue5Info.engineRoot}\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue5Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Archive -Archivedirectory=\"${outputDir}\" ${customFlags}")
 }
 
 def runAllTests(config = "Development", platform = "Win64")
@@ -70,7 +70,7 @@ def runFilteredTests(testFilter, config = "Development", platform = "Win64")
 def runAutomationCommand(testCommand, config = "Development", platform = "Win64")
 {
    log("Running tests in ${config} configuration on ${platform}")
-   def result = bat (label: "Run UE5 Automation Tests", script: "\"${ue5Info.engineRoot}Engine\\Binaries\\${platform}\\UnrealEditor-Cmd.exe\" \"${ue5Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportExportPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\"", returnStatus: true)
+   def result = bat (label: "Run UE5 Automation Tests", script: "\"${ue5Info.engineRoot}\\Binaries\\${platform}\\UnrealEditor-Cmd.exe\" \"${ue5Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportExportPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\"", returnStatus: true)
    
    if (result != 0)
    {
@@ -111,5 +111,5 @@ def getJUnitXMLContentFromJSON( String json_content ) {
 
 def fixupRedirects(platform = "Win64")
 {
-   bat(label: "Fix up redirectors in UE5 project", script: "\"${ue5Info.engineRoot}Engine\\Binaries\\${platform}\\UnrealEditor.exe\" \"${ue5Info.project}\" -run=ResavePackages -fixupredirects -autocheckout -projectonly -unattended -stdout")
+   bat(label: "Fix up redirectors in UE5 project", script: "\"${ue5Info.engineRoot}\\Binaries\\${platform}\\UnrealEditor.exe\" \"${ue5Info.project}\" -run=ResavePackages -fixupredirects -autocheckout -projectonly -unattended -stdout")
 }
