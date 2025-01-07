@@ -30,7 +30,7 @@ pipeline {
         OUTPUTDIR = "${env.WORKSPACE}\\Output"                                  // Output directory - Don't change
         
         // Discord
-        //WEBHOOK_BUILD = "https://discord.com/api/webhooks/1061783301481832448/JEWoUs7z_W0aJrvXzCD8gtw66yjW8QQDKP7X7D_PaMsuBe-1Xs03KjfXZjnATR1P-NSd"     // Discord Webhook URL so that update messages can be sent to your discord server
+        //WEBHOOK_BUILD = "https://discord.com/api/webhooks/1061783301481832448/JEWoUs7z_W0aJrvXzCD8gtw66yjW8QQDKP7X7D_Pa"     // Discord Webhook URL so that update messages can be sent to your discord server
         
         // Steam
         //STEAMUSR = "4dcb6cd0-69ea-4f18-8f00-c8333db90524"                       // Credentials ID to a steam user/password credential (that has permission to upload the game to steam)
